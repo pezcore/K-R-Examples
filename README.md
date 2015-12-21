@@ -1,28 +1,47 @@
 # K-R-Examples
+==============
 
 
-Welcome to StackEdit!
-===================
-
-
-Hey! I'm your first Markdown document in **StackEdit**[^stackedit]. Don't delete me, I'm very helpful! I can be recovered anyway in the **Utils** tab of the <i class="icon-cog"></i> **Settings** dialog.
-
-----------
 
 
 Chapter 1
 ------------
-Let us begin with a quick introduction in C. Our aim is to show the essential elements of the language in real programs, but without getting bogged down in details, rules, and exceptions. At this point, we are not trying to be complete or even precise (save that the examples are meant to be correct). We want to get you as quickly as possible to the point where you can write useful programs, and to do that we have to concentrate on the basics: variables and constants, arithmetic, control flow, functions, and the rudiments of input and output. We are intentionally leaving out of this chapter features of C that are important for writing bigger programs. These include pointers, structures, most of C's rich set of operators, several control-flow statements, and the standard library.
+Let us begin with a quick introduction in C. Our aim is to show the essential
+elements of the language in real programs, but without getting bogged down in
+details, rules, and exceptions. At this point, we are not trying to be complete
+or even precise (save that the examples are meant to be correct). We want to
+get you as quickly as possible to the point where you can write useful
+programs, and to do that we have to concentrate on the basics: variables and
+constants, arithmetic, control flow, functions, and the rudiments of input and
+output. We are intentionally leaving out of this chapter features of C that are
+important for writing bigger programs. These include pointers, structures, most
+of C's rich set of operators, several control-flow statements, and the standard
+library.
 
-This approach and its drawbacks. Most notable is that the complete story on any particular feature is not found here, and the tutorial, by being brief, may also be misleading. And because the examples do not use the full power of C, they are not as concise and elegant as they might be. We have tried to minimize these effects, but be warned. Another drawback is that later chapters will necessarily repeat some of this chapter. We hope that the repetition will help you more than it annoys.
+This approach and its drawbacks. Most notable is that the complete story on any
+particular feature is not found here, and the tutorial, by being brief, may
+also be misleading. And because the examples do not use the full power of C,
+they are not as concise and elegant as they might be. We have tried to minimize
+these effects, but be warned. Another drawback is that later chapters will
+necessarily repeat some of this chapter. We hope that the repetition will help
+you more than it annoys.
 
-In any case, experienced programmers should be able to extrapolate from the material in this chapter to their own programming needs. Beginners should supplement it by writing small, similar programs of their own. Both groups can use it as a framework on which to hang the more detailed descriptions that begin in Chapter 2.
+In any case, experienced programmers should be able to extrapolate from the
+material in this chapter to their own programming needs. Beginners should
+supplement it by writing small, similar programs of their own. Both groups can
+use it as a framework on which to hang the more detailed descriptions that
+begin in Chapter 2.
 
 #### 1.1 Getting Started
 
-The only way to learn a new programming language is by writing programs in it. The first program to write is the same for all languages: Print the words `hello, world`
+The only way to learn a new programming language is by writing programs in it.
+The first program to write is the same for all languages: Print the words
+`hello, world`
  
-This is a big hurdle; to leap over it you have to be able to create the program text somewhere, compile it successfully, load it, run it, and find out where your output went. With these mechanical details mastered, everything else is comparatively easy.
+This is a big hurdle; to leap over it you have to be able to create the program
+text somewhere, compile it successfully, load it, run it, and find out where
+your output went. With these mechanical details mastered, everything else is
+comparatively easy.
 
 In C, the program to print `hello, world` is
 ```
@@ -46,7 +65,7 @@ it will print
    
 On other systems, the rules will be different; check with a local expert.
 
-Now, for some explanations about the program itself. A C program, whatever its size, consists of *functions* and *variables*. A function contains statements that specify the computing operations to be done, and variables store values used during the computation. C functions are like the subroutines and functions in Fortran or the procedures and functions of Pascal. Our example is a function named main. Normally you are at liberty to give functions whatever names you like, but ``main'' is special - your program begins executing at the beginning of main. This means that every program must have a main somewhere.
+Now, for some explanations about the program itself. A C program, whatever its size, consists of *functions* and *variables*. A function contains statements that specify the computing operations to be done, and variables store values used during the computation. C functions are like the subroutines and functions in Fortran or the procedures and functions of Pascal. Our example is a function named main. Normally you are at liberty to give functions whatever names you like, but `main` is special - your program begins executing at the beginning of main. This means that every program must have a main somewhere.
 
 main will usually call other functions to help perform its job, some that you wrote, and others from libraries that are provided for you. The first line of the program,
 
@@ -155,15 +174,16 @@ In C, all variables must be declared before they are used, usually at the beginn
     int lower, upper, step;
 ```
 
-The type int means that the variables listed are integers; by contrast with float, which means floating point, i.e., numbers that may have a fractional part. The range of both int and float depends on the machine you are using; 16-bits ints, which lie between -32768 and +32767, are common, as are 32-bit ints. A float number is typically a 32-bit quantity, with at least six significant digits and magnitude generally between about 10-38 and 1038.
+The type `int` means that the variables listed are integers; by contrast with float, which means floating point, i.e., numbers that may have a fractional part. The range of both int and float depends on the machine you are using; 16-bits ints, which lie between -32768 and +32767, are common, as are 32-bit ints. A float number is typically a 32-bit quantity, with at least six significant digits and magnitude generally between about 10-38 and 1038.
 
 C provides several other data types besides int and float, including:
-name | description
+
+name   | description
 -------|-----------------------------
-char   |	character - a single byte
-short  |	short integer
-long   |	long integer
-double |	double-precision floating point 
+`char`   |	character - a single byte
+`short`  |	short integer
+`long`   |	long integer
+`double` |	double-precision floating point 
 
 
 The size of these objects is also machine-dependent. There are also *arrays*, *structures* and *unions* of these basic types, *pointers* to them, and *functions* that return them, all of which we will meet in due course.
@@ -178,7 +198,6 @@ which set the variables to their initial values. Individual statements are termi
 Each line of the table is computed the same way, so we use a loop that repeats once per output line; this is the purpose of the `while` loop
 
     while (fahr <= upper) {
-       ...
 
 The `while` loop operates as follows: The condition in parentheses is tested. If it is true (`fahr` is less than or equal to `upper`), the body of the loop (the three statements enclosed in braces) is executed. Then the condition is re-tested, and if true, the body is executed again. When the test becomes false (`fahr` exceeds `upper`) the loop ends, and execution continues at the statement that follows the loop. There are no further statements in this program, so it terminates.
 
@@ -419,111 +438,6 @@ The parentheses around the assignment, within the condition are necessary. The p
 is equivalent to
    c = (getchar() != EOF)
 This has the undesired effect of setting c to 0 or 1, depending on whether or not the call of getchar returned end of file. (More on this in Chapter 2.)
-Exercsise 1-6. Verify that the expression getchar() != EOF is 0 or 1.
+**Exercsise 1-6**. Verify that the expression getchar() != EOF is 0 or 1.
 
-Exercise 1-7. Write a program to print the value of EOF.
-
-### Fenced code blocks
-
-GitHub's fenced code blocks are also supported with **Highlight.js** syntax highlighting:
-
-```
-// Foo
-var bar = 0;
-```
-
-> **Tip:** To use **Prettify** instead of **Highlight.js**, just configure the **Markdown Extra** extension in the <i class="icon-cog"></i> **Settings** dialog.
-
-> **Note:** You can find more information:
-
-> - about **Prettify** syntax highlighting [here][5],
-> - about **Highlight.js** syntax highlighting [here][6].
-
-
-### Footnotes
-
-You can create footnotes like this[^footnote].
-
-  [^footnote]: Here is the *text* of the **footnote**.
-
-
-### SmartyPants
-
-SmartyPants converts ASCII punctuation characters into "smart" typographic punctuation HTML entities. For example:
-
-|                  | ASCII                        | HTML              |
- ----------------- | ---------------------------- | ------------------
-| Single backticks | `'Isn't this fun?'`            | 'Isn't this fun?' |
-| Quotes           | `"Isn't this fun?"`            | "Isn't this fun?" |
-| Dashes           | `-- is en-dash, --- is em-dash` | -- is en-dash, --- is em-dash |
-
-
-### Table of contents
-
-You can insert a table of contents using the marker `[TOC]`:
-
-[TOC]
-
-
-### MathJax
-
-You can render *LaTeX* mathematical expressions using **MathJax**, as on [math.stackexchange.com][1]:
-
-The *Gamma function* satisfying $\Gamma(n) = (n-1)!\quad\forall n\in\mathbb N$ is via the Euler integral
-
-$$
-\Gamma(z) = \int_0^\infty t^{z-1}e^{-t}dt\,.
-$$
-
-> **Tip:** To make sure mathematical expressions are rendered properly on your website, include **MathJax** into your template:
-
-```
-<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
-```
-
-> **Note:** You can find more information about **LaTeX** mathematical expressions [here][4].
-
-
-### UML diagrams
-
-You can also render sequence diagrams like this:
-
-```sequence
-Alice->Bob: Hello Bob, how are you?
-Note right of Bob: Bob thinks
-Bob-->Alice: I am good thanks!
-```
-
-And flow charts like this:
-
-```flow
-st=>start: Start
-e=>end
-op=>operation: My Operation
-cond=>condition: Yes or No?
-
-st->op->cond
-cond(yes)->e
-cond(no)->op
-```
-
-> **Note:** You can find more information:
-
-> - about **Sequence diagrams** syntax [here][7],
-> - about **Flow charts** syntax [here][8].
-
-### Support StackEdit
-
-[![](https://cdn.monetizejs.com/resources/button-32.png)](https://monetizejs.com/authorize?client_id=ESTHdCYOi18iLhhO&summary=true)
-
-  [^stackedit]: [StackEdit](https://stackedit.io/) is a full-featured, open-source Markdown editor based on PageDown, the Markdown library used by Stack Overflow and the other Stack Exchange sites.
-
-
-  [1]: http://math.stackexchange.com/
-  [2]: http://daringfireball.net/projects/markdown/syntax "Markdown"
-  [3]: https://github.com/jmcmanus/pagedown-extra "Pagedown Extra"
-  [4]: http://meta.math.stackexchange.com/questions/5020/mathjax-basic-tutorial-and-quick-reference
-  [5]: https://code.google.com/p/google-code-prettify/
-  [6]: http://highlightjs.org/
-  [7]: http://bramp.github.io/js-sequence-diagrams/
-  [8]: http://adrai.github.io/flowchart.js/
+**Exercise 1-7**. Write a program to print the value of EOF.
