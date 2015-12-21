@@ -44,61 +44,91 @@ your output went. With these mechanical details mastered, everything else is
 comparatively easy.
 
 In C, the program to print `hello, world` is
-```
+
    #include <stdio.h>
    main() {
      printf("hello, world\n");
    }
-```
 
 Just how to run this program depends on the system you are using. As a specific example, on the UNIX operating system you must create the program in a file whose name ends in `.c`, such as `hello.c`, then compile it with the command:
 
-`cc hello.c`
+    `cc hello.c`
 
 If you haven't botched anything, such as omitting a character or misspelling something, the compilation will proceed silently, and make an executable file called a.out. If you run a.out by typing the command
 
-   `a.out`
+    `a.out`
    
 it will print
 
-   `hello, world`
+    `hello, world`
    
 On other systems, the rules will be different; check with a local expert.
 
-Now, for some explanations about the program itself. A C program, whatever its size, consists of *functions* and *variables*. A function contains statements that specify the computing operations to be done, and variables store values used during the computation. C functions are like the subroutines and functions in Fortran or the procedures and functions of Pascal. Our example is a function named main. Normally you are at liberty to give functions whatever names you like, but `main` is special - your program begins executing at the beginning of main. This means that every program must have a main somewhere.
+Now, for some explanations about the program itself. A C program, whatever its
+size, consists of *functions* and *variables*. A function contains statements
+that specify the computing operations to be done, and variables store values
+used during the computation. C functions are like the subroutines and functions
+in Fortran or the procedures and functions of Pascal. Our example is a function
+named main. Normally you are at liberty to give functions whatever names you
+like, but `main` is special - your program begins executing at the beginning of
+main. This means that every program must have a main somewhere.
 
-main will usually call other functions to help perform its job, some that you wrote, and others from libraries that are provided for you. The first line of the program,
+main will usually call other functions to help perform its job, some that you
+wrote, and others from libraries that are provided for you. The first line of
+the program,
 
 ` #include <stdio.h>`
 
-tells the compiler to include information about the standard input/output library; the line appears at the beginning of many C source files. The standard library is described in Chapter 7 and Appendix B.
-One method of communicating data between functions is for the calling function to provide a list of values, called *arguments*, to the function it calls. The parentheses after the function name surround the argument list. In this example, main is defined to be a function that expects no arguments, which is indicated by the empty list ( ).
+tells the compiler to include information about the standard input/output
+library; the line appears at the beginning of many C source files. The standard
+library is described in Chapter 7 and Appendix B.
+
+One method of communicating data between functions is for the calling function
+to provide a list of values, called *arguments*, to the function it calls. The
+parentheses after the function name surround the argument list. In this
+example, main is defined to be a function that expects no arguments, which is
+indicated by the empty list `( )`.
+
 
 **The First C Program :**
-```
-#include <stdio.h>       /* include information about standard library */
-main() {                 /* define a function called main that received no argument values */
-/* statements of main are enclosed in braces */
-    printf("hello, world\n");        /* main calls library function printf */
-}                                    /* \n represents the newline character*/
-```
 
-The statements of a function are enclosed in braces `{ }`. The function main contains only one statement,
+    #include <stdio.h>       /* include information about standard library */
+    main() {                 /* define a function called main that received no
+                                argument values */
+    /* statements of main are enclosed in braces */
+        printf("hello, world\n"); /* main calls library function printf */
+    }                             /* \n represents the newline
+    character*/
+
+
+The statements of a function are enclosed in braces `{ }`. The function main
+contains only one statement,
 
 `   printf("hello, world\n");`
 
-A function is called by naming it, followed by a parenthesized list of arguments, so this calls the function `printf` with the argument `"hello, world\n"`. `printf` is a library function that prints output, in this case the string of characters between the quotes.
+A function is called by naming it, followed by a parenthesized list of
+arguments, so this calls the function `printf` with the argument `"hello,
+world\n"`. `printf` is a library function that prints output, in this case the
+string of characters between the quotes.
 
-A sequence of characters in double quotes, like `"hello, world\n"`, is called a *character string* or *string constant*. For the moment our only use of character strings will be as arguments for printf and other functions.
+A sequence of characters in double quotes, like `"hello, world\n"`, is called a
+*character string* or *string constant*. For the moment our only use of
+character strings will be as arguments for printf and other functions.
 
-The sequence `\n` in the string is C notation for the newline character, which when printed advances the output to the left margin on the next line. If you leave out the `\n` (a worthwhile experiment), you will find that there is no line advance after the output is printed. You must use `\n` to include a newline character in the `printf` argument; if you try something like
+The sequence `\n` in the string is C notation for the newline character, which
+when printed advances the output to the left margin on the next line. If you
+leave out the `\n` (a worthwhile experiment), you will find that there is no
+line advance after the output is printed. You must use `\n` to include a
+newline character in the `printf` argument; if you try something like
 ```
    printf("hello, world
    ");
 ```
 the C compiler will produce an error message.
 
-`printf` never supplies a newline character automatically, so several calls may be used to build up an output line in stages. Our first program could just as well have been written
+`printf` never supplies a newline character automatically, so several calls may
+be used to build up an output line in stages. Our first program could just as
+well have been written
 ```
    #include <stdio.h>
 
@@ -111,15 +141,22 @@ the C compiler will produce an error message.
 ```
 to produce identical output.
 
-Notice that `\n` represents only a single character. An *escape sequence* like `\n` provides a general and extensible mechanism for representing hard-to-type or invisible characters. Among the others that C provides are `\t` for tab, `\b` for backspace, `\"` for the double quote and `\\` for the backslash itself. There is a complete list in Section 2.3.
+Notice that `\n` represents only a single character. An *escape sequence* like
+`\n` provides a general and extensible mechanism for representing hard-to-type
+or invisible characters. Among the others that C provides are `\t` for tab,
+`\b` for backspace, `\"` for the double quote and `\\` for the backslash
+itself. There is a complete list in Section 2.3.
 
-**Exercise 1-1**. Run the `hello, world` program on your system. Experiment with leaving out parts of the program, to see what error messages you get.
+**Exercise 1-1**. Run the `hello, world` program on your system. Experiment
+with leaving out parts of the program, to see what error messages you get.
 
-**Exercise 1-2**. Experiment to find out what happens when prints's argument string contains `\c`, where c is some character not listed above.
+**Exercise 1-2**. Experiment to find out what happens when prints's argument
+string contains `\c`, where c is some character not listed above.
 
 #### 1.2 Variables and Arithmetic Expressions
 
-The next program uses the formula *°C = (5/9) (°F-32)* to print the following table of Fahrenheit temperatures and their centigrade or Celsius equivalents:
+The next program uses the formula *°C = (5/9) (°F-32)* to print the following
+table of Fahrenheit temperatures and their centigrade or Celsius equivalents:
 ```
    1    -17
    20   -6
@@ -139,7 +176,10 @@ The next program uses the formula *°C = (5/9) (°F-32)* to print the following 
    300  148
 ```
 
-The program itself still consists of the definition of a single function named main. It is longer than the one that printed `hello, world`, but not complicated. It introduces several new ideas, including comments, declarations, variables, arithmetic expressions, loops , and formatted output.
+The program itself still consists of the definition of a single function named
+main. It is longer than the one that printed `hello, world`, but not
+complicated. It introduces several new ideas, including comments, declarations,
+variables, arithmetic expressions, loops , and formatted output.
 ```
    #include <stdio.h>
 
@@ -367,21 +407,29 @@ We are going to consider a family of related programs for processing character d
 
 The model of input and output supported by the standard library is very simple. Text input or output, regardless of where it originates or where it goes to, is dealt with as streams of characters. A text stream is a sequence of characters divided into lines; each line consists of zero or more characters followed by a newline character. It is the responsibility of the library to make each input or output stream confirm this model; the C programmer using the library need not worry about how lines are represented outside the program.
 
-The standard library provides several functions for reading or writing one character at a time, of which getchar and putchar are the simplest. Each time it is called, getchar reads the next input character from a text stream and returns that as its value. That is, after
+The standard library provides several functions for reading or writing one
+character at a time, of which getchar and putchar are the simplest. Each time
+it is called, getchar reads the next input character from a text stream and
+returns that as its value. That is, after
 
     c = getchar();
 
-the variable `c` contains the next character of input. The characters normally come from the keyboard; input from files is discussed in Chapter 7.
+the variable `c` contains the next character of input. The characters normally
+come from the keyboard; input from files is discussed in Chapter 7.
 
 The function putchar prints a character each time it is called:
 
     putchar(c);
 
-prints the contents of the integer variable `c` as a character, usually on the screen. Calls to `putchar` and `printf` may be interleaved; the output will appear in the order in which the calls are made.
+prints the contents of the integer variable `c` as a character, usually on the
+screen. Calls to `putchar` and `printf` may be interleaved; the output will
+appear in the order in which the calls are made.
 
 ##### 1.5.1 File Copying
 
-Given `getchar` and `putchar`, you can write a surprising amount of useful code without knowing anything more about input and output. The simplest example is a program that copies its input to its output one character at a time:
+Given `getchar` and `putchar`, you can write a surprising amount of useful code
+without knowing anything more about input and output. The simplest example is a
+program that copies its input to its output one character at a time:
 
     read a character
         while (charater is not end-of-file indicator)
@@ -406,38 +454,66 @@ main()
 ```
 The relational operator `!=` means "not equal to".
 
-What appears to be a character on the keyboard or screen is of course, like everything else, stored internally just as a bit pattern. The type `char` is specifically meant for storing such character data, but any integer type can be used. We used int for a subtle but important reason.
+What appears to be a character on the keyboard or screen is of course, like
+everything else, stored internally just as a bit pattern. The type `char` is
+specifically meant for storing such character data, but any integer type can be
+used. We used int for a subtle but important reason.
 
-The problem is distinguishing the end of input from valid data. The solution is that getchar returns a distinctive value when there is no more input, a value that cannot be confused with any real character. This value is called `EOF`, for "end of file". We must declare c to be a type big enough to hold any value that getchar returns. We can't use char since `c` must be big enough to hold EOF in addition to any possible `char`. Therefore we use `int`.
+The problem is distinguishing the end of input from valid data. The solution is
+that getchar returns a distinctive value when there is no more input, a value
+that cannot be confused with any real character. This value is called `EOF`,
+for "end of file". We must declare c to be a type big enough to hold any value
+that getchar returns. We can't use char since `c` must be big enough to hold
+EOF in addition to any possible `char`. Therefore we use `int`.
 
-`EOF` is an integer defined in `<stdio.h>`, but the specific numeric value doesn't matter as long as it is not the same as any char value. By using the symbolic constant, we are assured that nothing in the program depends on the specific numeric value.
+`EOF` is an integer defined in `<stdio.h>`, but the specific numeric value
+doesn't matter as long as it is not the same as any char value. By using the
+symbolic constant, we are assured that nothing in the program depends on the
+specific numeric value.
 
-The program for copying would be written more concisely by experienced C programmers. In C, any assignment, such as
+The program for copying would be written more concisely by experienced C
+programmers. In C, any assignment, such as
 
 `c = getchar();`
 
-is an expression and has a value, which is the value of the left hand side after the assignment. This means that a assignment can appear as part of a larger expression. If the assignment of a character to c is put inside the test part of a while loop, the copy program can be written this way:
-```
-   #include <stdio.h>
+is an expression and has a value, which is the value of the left hand side
+after the assignment. This means that a assignment can appear as part of a
+larger expression. If the assignment of a character to c is put inside the test
+part of a while loop, the copy program can be written this way:
 
-   /* copy input to output; 2nd version  */
-   main()
-   {
-       int c;
+    #include <stdio.h>
 
-       while ((c = getchar()) != EOF)
-           putchar(c);
-   }
-```
-The while gets a character, assigns it to c, and then tests whether the character was the end-of-file signal. If it was not, the body of the while is executed, printing the character. The while then repeats. When the end of the input is finally reached, the while terminates and so does main.
-This version centralizes the input - there is now only one reference to getchar - and shrinks the program. The resulting program is more compact, and, once the idiom is mastered, easier to read. You'll see this style often. (It's possible to get carried away and create impenetrable code, however, a tendency that we will try to curb.)
+    /* copy input to output; 2nd version  */
+    main()
+    {
+        int c;
+
+        while ((c = getchar()) != EOF)
+            putchar(c);
+    }
+
+The while gets a character, assigns it to c, and then tests whether the
+character was the end-of-file signal. If it was not, the body of the while is
+executed, printing the character. The while then repeats. When the end of the
+input is finally reached, the while terminates and so does main.
+
+This version centralizes the input - there is now only one reference to getchar
+- and shrinks the program. The resulting program is more compact, and, once the
+idiom is mastered, easier to read. You'll see this style often. (It's possible
+to get carried away and create impenetrable code, however, a tendency that we
+will try to curb.)
 
 The parentheses around the assignment, within the condition are necessary. The precedence of != is higher than that of =, which means that in the absence of parentheses the relational test != would be done before the assignment =. So the statement
 
-   c = getchar() != EOF
+    c = getchar() != EOF
+
 is equivalent to
-   c = (getchar() != EOF)
-This has the undesired effect of setting c to 0 or 1, depending on whether or not the call of getchar returned end of file. (More on this in Chapter 2.)
+
+    c = (getchar() != EOF)
+   
+This has the undesired effect of setting c to 0 or 1, depending on whether or
+not the call of getchar returned end of file. (More on this in Chapter 2.)
+
 **Exercsise 1-6**. Verify that the expression getchar() != EOF is 0 or 1.
 
 **Exercise 1-7**. Write a program to print the value of EOF.
