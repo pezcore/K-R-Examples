@@ -32,7 +32,7 @@ supplement it by writing small, similar programs of their own. Both groups can
 use it as a framework on which to hang the more detailed descriptions that
 begin in Chapter 2.
 
-#### 1.1 Getting Started
+## 1.1 Getting Started
 
 The only way to learn a new programming language is by writing programs in it.
 The first program to write is the same for all languages: Print the words
@@ -50,11 +50,15 @@ In C, the program to print `hello, world` is
         printf("hello, world\n");
     }
 
-Just how to run this program depends on the system you are using. As a specific example, on the UNIX operating system you must create the program in a file whose name ends in `.c`, such as `hello.c`, then compile it with the command:
+Just how to run this program depends on the system you are using. As a specific
+example, on the UNIX operating system you must create the program in a file
+whose name ends in `.c`, such as `hello.c`, then compile it with the command:
 
     cc hello.c
 
-If you haven't botched anything, such as omitting a character or misspelling something, the compilation will proceed silently, and make an executable file called a.out. If you run a.out by typing the command
+If you haven't botched anything, such as omitting a character or misspelling
+something, the compilation will proceed silently, and make an executable file
+called a.out. If you run a.out by typing the command
 
     a.out
    
@@ -153,7 +157,7 @@ with leaving out parts of the program, to see what error messages you get.
 **Exercise 1-2**. Experiment to find out what happens when prints's argument
 string contains `\c`, where c is some character not listed above.
 
-#### 1.2 Variables and Arithmetic Expressions
+## 1.2 Variables and Arithmetic Expressions
 
 The next program uses the formula *°C = (5/9) (°F-32)* to print the following
 table of Fahrenheit temperatures and their centigrade or Celsius equivalents:
@@ -426,7 +430,7 @@ above the table.
 **Exercise 1-4**. Write a program to print the corresponding Celsius to
 Fahrenheit table.
 
-#### 1.3 The for statement
+## 1.3 The for statement
 
 There are plenty of different ways to write a program for a particular task.
 Let's try a variation on the temperature converter.
@@ -486,7 +490,7 @@ than while and it keeps the loop control statements together in one place.
 **Exercise 1-5**. Modify the temperature conversion program to print the table
 in reverse order, that is, from 300 degrees to 0.
 
-#### 1.4 Symbolic Constants
+## 1.4 Symbolic Constants
 
 A final observation before we leave temperature conversion forever. It's bad
 practice to bury "magic numbers" like 300 and 20 in a program; they convey
@@ -524,7 +528,7 @@ conventionally written in upper case so they can ber readily distinguished from
 lower case variable names. Notice that there is no semicolon at the end of a
 `#define` line.
 
-#### 1.5 Character Input and Output
+## 1.5 Character Input and Output
 
 We are going to consider a family of related programs for processing character
 data. You will find that many programs are just expanded versions of the
@@ -556,7 +560,7 @@ prints the contents of the integer variable `c` as a character, usually on the
 screen. Calls to `putchar` and `printf` may be interleaved; the output will
 appear in the order in which the calls are made.
 
-##### 1.5.1 File Copying
+### 1.5.1 File Copying
 
 Given `getchar` and `putchar`, you can write a surprising amount of useful code
 without knowing anything more about input and output. The simplest example is a
@@ -652,7 +656,7 @@ not the call of getchar returned end of file. (More on this in Chapter 2.)
 
 **Exercise 1-7**. Write a program to print the value of EOF.
 
-#### 1.5.2 Character Counting
+### 1.5.2 Character Counting
 
 The next program counts characters; it is similar to the copy program.
 
@@ -719,7 +723,7 @@ Programs should act intelligently when given zero-length input. The `while` and
 `for` statements help ensure that programs do reasonable things with boundary
 conditions.  
 
-##### 1.5.3 Line Counting
+### 1.5.3 Line Counting
 
 The next program counts input lines. As we mentioned above, the standard
 library ensures that an input text stream appears as a sequence of lines, each
@@ -776,7 +780,7 @@ each string of one or more blanks by a single blank.
 each tab by `\t`, each backspace by `\b`, and each backslash by `\\`. This
 makes tabs and backspaces visible in an unambiguous way.
 
-##### 1.5.4 Word Counting
+### 1.5.4 Word Counting
 
 The fourth in our series of useful programs counts lines, words, and
 characters, with the loose definition that a word is any sequence of characters
@@ -859,7 +863,7 @@ input are most likely to uncover bugs if there are any?
 
 **Exercise 1-12**. Write a program that prints its input one word per line.
 
-##### 1.6 Arrays
+## 1.6 Arrays
 
 Let us write a program to count the number of occurrences of each digit, of
 white space characters (blank, tab, newline), and of all other characters. This
@@ -982,13 +986,16 @@ vertical orientation is more challenging.
 **Exercise 1-14**. Write a program to print a histogram of the frequencies of
 different characters in its input.
 
-#### 1.7 Functions
+## 1.7 Functions
 
 In C, a function is equivalent to a subroutine or function in Fortran, or a
 procedure or function in Pascal. A function provides a convenient way to
 encapsulate some computation, which can then be used without worrying about its
 implementation. With properly designed functions, it is possible to ignore
-*how* a job is done; knowing *what* is done is sufficient. C makes the sue of functions easy, convinient and efficient; you will often see a short function defined and called only once, just because it clarifies some piece of code.
+*how* a job is done; knowing *what* is done is sufficient. C makes the sue of
+functions easy, convinient and efficient; you will often see a short function
+defined and called only once, just because it clarifies some piece of code.
+
 So far we have used only functions like `printf`, `getchar` and `putchar` that
 have been provided for us; now it's time to write a few of our own. Since C has
 no exponentiation operator like the `**` of Fortran, let us illustrate the
@@ -1049,7 +1056,8 @@ The function `power` is called twice by main, in the line
 
 Each call passes two arguments to `power`, which each time returns an integer
 to be formatted and printed. In an expression, `power(2,i)` is an integer just
-as 2 and `i` are. (Not all functions produce an integer value; we will take this up in Chapter 4.)
+as 2 and `i` are. (Not all functions produce an integer value; we will take
+this up in Chapter 4.)
 
 The first line of `power` itself,
 
@@ -1091,9 +1099,12 @@ The declaration
 
 just before `main` says that `power` is a function that expects two `int`
 arguments and returns an `int`. This declaration, which is called a *function
-prototype*, has to agree with the definition and uses of `power`. It is an error if the definition of a function or any uses of it do not agree with its prototype.
+prototype*, has to agree with the definition and uses of `power`. It is an
+error if the definition of a function or any uses of it do not agree with its
+prototype.
 
-Parameter names need not agree. Indeed, parameter names are optional in a function prototype, so for the prototype we could have written
+Parameter names need not agree. Indeed, parameter names are optional in a
+function prototype, so for the prototype we could have written
 
     int power(int, int);
 
@@ -1136,4 +1147,361 @@ declaration and definition still works in ANSI C, at least for a transition
 period, but we strongly recommend that you use the new form when you have a
 compiler that supports it.
 
-**Exercise 1.15**. Rewrite the temperature conversion program of Section 1.2 to use a function for conversion.
+**Exercise 1.15**. Rewrite the temperature conversion program of Section 1.2 to
+use a function for conversion.
+
+## 1.8 Arguments - Call by Value
+
+One aspect of C functions may be unfamiliar to programmers who are used to some
+other languages, particulary Fortran. In C, all function arguments are passed
+"by value." This means that the called function is given the values of its
+arguments in temporary variables rather than the originals. This leads to some
+different properties than are seen with "call by reference" languages like
+Fortran or with var parameters in Pascal, in which the called routine has
+access to the original argument, not a local copy.
+
+Call by value is an asset, however, not a liability. It usually leads to more
+compact programs with fewer extraneous variables, because parameters can be
+treated as conveniently initialized local variables in the called routine. For
+example, here is a version of `power` that makes use of this property.
+
+    /* power:  raise base to n-th power; n >= 0; version 2 */
+    int power(int base, int n)
+    {
+        int p;
+
+        for (p = 1; n > 0; --n)
+            p = p * base;
+        return p;
+    }
+
+The parameter `n` is used as a temporary variable, and is counted down (a `for`
+loop that runs backwards) until it becomes zero; there is no longer a need for
+the variable `i`. Whatever is done to `n` inside a`power` has no effect on the
+argument that `power` was originally called with.
+
+When necessary, it is possible to arrange for a function to modify a variable
+in a calling routine. The caller must provide the *address* of the variable to
+be set (technically a `pointer` to the variable), and the called function must
+declare the parameter to be a pointer and access the variable indirectly
+through it. We will cover pointers in Chapter 5.
+
+The story is different for arrays. When the name of an array is used as an
+argument, the value passed to the function is the location or address of the
+beginning of the array - there is no copying of array elements. By subscripting
+this value, the function can access and alter any argument of the array. This
+is the topic of the next section.
+
+#### 1.9 Character Arrays
+
+The most common type of array in C is the array of characters. To illustrate
+the use of character arrays and functions to manipulate them, let's write a
+program that reads a set of text lines and prints the longest. The outline is
+simple enough:
+
+    while (there's another line)
+        if (it's longer than the previous longest)
+            (save it)
+            (save its length)
+    print longest line
+
+This outline makes it clear that the program divides naturally into pieces. One
+piece gets a new line, another saves it, and the rest controls the process.
+
+Since things divide so nicely, it would be well to write them that way too.
+Accordingly, let us first write a separate function `getline` to fetch the next
+line of input. We will try to make the function useful in other contexts. At
+the minimum, `getline` has to return a signal about possible end of file; a
+more useful design would be to return the length of the line, or zero if end of
+file is encountered. Zero is an acceptable end-of-file return because it is
+never a valid line length. Every text line has at least one character; even a
+line containing only a newline has length 1.
+
+When we find a line that is longer than the previous longest line, it must be
+saved somewhere. This suggests a second function, `copy`, to copy the new line
+to a safe place.
+
+Finally, we need a `main` program to control `getline` and `copy`. Here is the
+result.
+
+    #include <stdio.h>
+    #define MAXLINE 1000   /* maximum input line length */
+
+    int getline(char line[], int maxline);
+    void copy(char to[], char from[]);
+
+    /* print the longest input line */
+    main()
+    {
+        int len;            /* current line length */
+        int max;            /* maximum length seen so far */
+        char line[MAXLINE];    /* current input line */
+        char longest[MAXLINE]; /* longest line saved here */
+
+        max = 0;
+        while ((len = getline(line, MAXLINE)) > 0)
+            if (len > max) {
+                max = len;
+                copy(longest, line);
+            }
+        if (max > 0)  /* there was a line */
+            printf("%s", longest);
+        return 0;
+    }
+
+    /* getline:  read a line into s, return length  */
+    int getline(char s[],int lim)
+    {
+        int c, i;
+
+        for (i=0; i < lim-1 && (c=getchar())!=EOF && c!='\n'; ++i)
+            s[i] = c;
+        if (c == '\n') {
+            s[i] = c;
+            ++i;
+        }
+        s[i] = '\0';
+        return i;
+    }
+
+    /* copy:  copy 'from' into 'to'; assume to is big enough */
+    void copy(char to[], char from[])
+    {
+        int i;
+
+        i = 0;
+        while ((to[i] = from[i]) != '\0')
+            ++i;
+    }
+
+The functions `getline` and `copy` are declared at the beginning of the
+program, which we assume is contained in one file.  `main` and `getline`
+communicate through a pair of arguments and a returned value. In `getline`, the
+arguments are declared by the line
+
+    int getline(char s[], int lim);
+
+which specifies that the first argument, `s,` is an array, and the second,
+`lim`, is an integer. The purpose of supplying the size of an array in a
+declaration is to set aside storage. The length of an array `s` is not
+necessary in `getline` since its size is set in `main`. `getline` uses `return`
+to send a value back to the caller, just as the function `power` did. This line
+also declares that getline returns an `int`; since `int` is the default return
+type, it could be omitted.
+
+Some functions return a useful value; others, like `copy`, are used only for
+their effect and return no value. The return type of `copy` is `void`, which
+states explicitly that no value is returned.
+
+`getline` puts the character `'\0'` (the *null character*, whose value is zero)
+at the end of the array it is creating, to mark the end of the string of
+characters. This conversion is also used by the C language: when a string
+constant like
+
+    "hello\n"
+
+appears in a C program, it is stored as an array of characters containing the
+characters in the string and terminated with a `'\0'` to mark the end.
+
+The `%s` format specification in `printf` expects the corresponding argument to
+be a string represented in this form. `copy` also relies on the fact that its
+input argument is terminated with a `'\0'`, and copies this character into the
+output.
+
+It is worth mentioning in passing that even a program as small as this one
+presents some sticky design problems. For example, what should `main` do if it
+encounters a line which is bigger than its limit? `getline` works safely, in
+that it stops collecting when the array is full, even if no newline has been
+seen. By testing the length and the last character returned, `main` can
+determine whether the line was too long, and then cope as it wishes. In the
+interests of brevity, we have ignored this issue.
+
+There is no way for a user of `getline` to know in advance how long an input
+line might be, so `getline` checks for overflow. On the other hand, the user of
+`copy` already knows (or can find out) how big the strings are, so we have
+chosen not to add error checking to it.
+
+**Exercise 1-16**. Revise the main routine of the longest-line program so it
+will correctly print the length of arbitrary long input lines, and as much as
+possible of the text.
+
+**Exercise 1-17**. Write a program to print all input lines that are longer
+than 80 characters.
+
+**Exercise 1-18**. Write a program to remove trailing blanks and tabs from each
+line of input, and to delete entirely blank lines.
+
+**Exercise 1-19**. Write a function `reverse`(s) that reverses the character
+string `s`. Use it to write a program that reverses its input a line at a time.
+
+## 1.10 External Variables and Scope
+
+The variables in `main`, such as `line`, `longest`, etc., are private or local
+to `main`. Because they are declared within `main`, no other function can have
+direct access to them. The same is true of the variables in other functions;
+for example, the variable `i` in `getline` is unrelated to the `i` in copy.
+Each local variable in a function comes into existence only when the function
+is called, and disappears when the function is exited. This is why such
+variables are usually known as *automatic variables*, following terminology in
+other languages. We will use the term automatic henceforth to refer to these
+local variables. (Chapter 4 discusses the `static` storage class, in which
+local variables do retain their values between calls.)
+
+Because automatic variables come and go with function invocation, they do not
+retain their values from one call to the next, and must be explicitly set upon
+each entry. If they are not set, they will contain garbage.
+
+As an alternative to automatic variables, it is possible to define variables
+that are *external* to all functions, that is, variables that can be accessed
+by name by any function. (This mechanism is rather like Fortran COMMON or
+Pascal variables declared in the outermost block.) Because external variables
+are globally accessible, they can be used instead of argument lists to
+communicate data between functions. Furthermore, because external variables
+remain in existence permanently, rather than appearing and disappearing as
+functions are called and exited, they retain their values even after the
+functions that set them have returned.
+
+An external variable must be *defined*, exactly once, outside of any function;
+this sets aside storage for it. The variable must also be *declared* in each
+function that wants to access it; this states the type of the variable. The
+*declaration* may be an explicit extern statement or may be implicit from
+context. To make the discussion concrete, let us rewrite the longest-line
+program with line, longest, and max as external variables. This requires
+changing the calls, declarations, and bodies of all three functions.
+
+    #include <stdio.h>
+
+    #define MAXLINE 1000    /* maximum input line size */
+
+    int max;                /* maximum length seen so far */
+    char line[MAXLINE];     /* current input line */
+    char longest[MAXLINE];  /* longest line saved here */
+
+    int getline(void);
+    void copy(void);
+
+    /* print longest input line; specialized version */
+    main()
+    {
+        int len;
+        extern int max;
+        extern char longest[];
+
+        max = 0;
+        while ((len = getline()) > 0)
+            if (len > max) {
+                max = len;
+                copy();
+            }
+        if (max > 0)  /* there was a line */
+            printf("%s", longest);
+        return 0;
+    }
+
+    /* getline:  specialized version */
+    int getline(void)
+    {
+        int c, i;
+        extern char line[];
+
+        for (i = 0; i < MAXLINE - 1
+                && (c=getchar)) != EOF && c != '\n'; ++i)
+                    line[i] = c;
+        if (c == '\n') {
+            line[i] = c;
+            ++i;
+        }
+        line[i] = '\0';
+        return i;
+    }
+
+    /* copy: specialized version */
+    void copy(void)
+    {
+        int i;
+        extern char line[], longest[];
+
+        i = 0;
+        while ((longest[i] = line[i]) != '\0')
+            ++i;
+    }
+
+The external variables in `main`, `getline` and `copy` are defined by the first
+lines of the example above, which state their type and cause storage to be
+allocated for them. Syntactically, external definitions are just like
+definitions of local variables, but since they occur outside of functions, the
+variables are external. Before a function can use an external variable, the
+name of the variable must be made known to the function; the declaration is the
+same as before except for the added keyword `extern`.
+
+In certain circumstances, the `extern` declaration can be omitted. If the
+definition of the external variable occurs in the source file before its use in
+a particular function, then there is no need for an `extern` declaration in the
+function. The `extern` declarations in `main`, `getline` and `copy` are thus
+redundant. In fact, common practice is to place definitions of all external
+variables at the beginning of the source file, and then omit all `extern`
+declarations.
+
+If the program is in several source files, and a variable is defined in *file1*
+and used in *file2* and *file3*, then `extern` declarations are needed in
+*file2* and *file3* to connect the occurrences of the variable. The usual
+practice is to collect `extern` declarations of variables and functions in a
+separate file, historically called a header, that is included by `#include` at
+the front of each source file. The suffix `.h` is conventional for header
+names. The functions of the standard library, for example, are declared in
+headers like `<stdio.h>`. This topic is discussed at length in Chapter 4, and
+the library itself in Chapter 7 and Appendix B.
+
+Since the specialized versions of `getline` and `copy` have no arguments, logic
+would suggest that their prototypes at the beginning of the file should be
+`getline()` and `copy()`. But for compatibility with older C programs the
+standard takes an empty list as an old-style declaration, and turns off all
+argument list checking; the word `void` must be used for an explicitly empty
+list. We will discuss this further in Chapter 4.
+
+You should note that we are using the words *definition* and *declaration*
+carefully when we refer to external variables in this section."Definition"
+refers to the place where the variable is created or assigned storage;
+"declaration" refers to places where the nature of the variable is stated but
+no storage is allocated.
+
+By the way, there is a tendency to make everything in sight an `extern`
+variable because it appears to simplify communications - argument lists are
+short and variables are always there when you want them. But external variables
+are always there even when you don't want them. Relying too heavily on external
+variables is fraught with peril since it leads to programs whose data
+connections are not all obvious - variables can be changed in unexpected and
+even inadvertent ways, and the program is hard to modify. The second version of
+the longest-line program is inferior to the first, partly for these reasons,
+and partly because it destroys the generality of two useful functions by
+writing into them the names of the variables they manipulate.
+
+At this point we have covered what might be called the conventional core of C.
+With this handful of building blocks, it's possible to write useful programs of
+considerable size, and it would probably be a good idea if you paused long
+enough to do so. These exercises suggest programs of somewhat greater
+complexity than the ones earlier in this chapter.
+
+**Exercise 1-20**. Write a program `detab` that replaces tabs in the input with
+the proper number of blanks to space to the next tab stop. Assume a fixed set
+of tab stops, say every `n` columns. Should `n` be a variable or a symbolic
+parameter?
+
+**Exercise 1-21**. Write a program `entab` that replaces strings of blanks by
+the minimum number of tabs and blanks to achieve the same spacing. Use the same
+tab stops as for detab. When either a tab or a single blank would suffice to
+reach a tab stop, which should be given preference?
+
+**Exercise 1-22**. Write a program to "fold" long input lines into two or more
+shorter lines after the last non-blank character that occurs before the n-th
+column of input. Make sure your program does something intelligent with very
+long lines, and if there are no blanks or tabs before the specified column.
+
+**Exercise 1-23**. Write a program to remove all comments from a C program.
+Don't forget to handle quoted strings and character constants properly. C
+comments don't nest.
+
+**Exercise 1-24**. Write a program to check a C program for rudimentary syntax
+errors like unmatched parentheses, brackets and braces. Don't forget about
+quotes, both single and double, escape sequences, and comments. (This program
+is hard if you do it in full generality.)
