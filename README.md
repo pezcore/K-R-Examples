@@ -207,14 +207,26 @@ The two lines
 /* print Fahrenheit-Celsius table 
 for fahr = 0, 20, ..., 300 */
 ```
-are a *comment*, which in this case explains briefly what the program does. Any characters between `/*` and `*/` are ignored by the compiler; they may be used freely to make a program easier to understand. Comments may appear anywhere where a blank, tab or newline can.
-In C, all variables must be declared before they are used, usually at the beginning of the function before any executable statements. A declaration announces the properties of variables; it consists of a name and a list of variables, such as
+are a *comment*, which in this case explains briefly what the program does. Any
+characters between `/*` and `*/` are ignored by the compiler; they may be used
+freely to make a program easier to understand. Comments may appear anywhere
+where a blank, tab or newline can.
+
+In C, all variables must be declared before they are used, usually at the
+beginning of the function before any executable statements. A declaration
+announces the properties of variables; it consists of a name and a list of
+variables, such as
 ```
     int fahr, celsius;
     int lower, upper, step;
 ```
 
-The type `int` means that the variables listed are integers; by contrast with float, which means floating point, i.e., numbers that may have a fractional part. The range of both int and float depends on the machine you are using; 16-bits ints, which lie between -32768 and +32767, are common, as are 32-bit ints. A float number is typically a 32-bit quantity, with at least six significant digits and magnitude generally between about 10-38 and 1038.
+The type `int` means that the variables listed are integers; by contrast with
+float, which means floating point, i.e., numbers that may have a fractional
+part. The range of both int and float depends on the machine you are using;
+16-bits ints, which lie between -32768 and +32767, are common, as are 32-bit
+ints. A float number is typically a 32-bit quantity, with at least six
+significant digits and magnitude generally between about 10-38 and 1038.
 
 C provides several other data types besides int and float, including:
 
@@ -226,51 +238,99 @@ name   | description
 `double` |	double-precision floating point 
 
 
-The size of these objects is also machine-dependent. There are also *arrays*, *structures* and *unions* of these basic types, *pointers* to them, and *functions* that return them, all of which we will meet in due course.
+The size of these objects is also machine-dependent. There are also *arrays*,
+*structures* and *unions* of these basic types, *pointers* to them, and
+*functions* that return them, all of which we will meet in due course.
 
-Computation in the temperature conversion program begins with the *assignment statements*
+Computation in the temperature conversion program begins with the *assignment
+statements*
 
     lower = 0;
     upper = 300;
     step = 20;
     
-which set the variables to their initial values. Individual statements are terminated by semicolons.
-Each line of the table is computed the same way, so we use a loop that repeats once per output line; this is the purpose of the `while` loop
+which set the variables to their initial values. Individual statements are
+terminated by semicolons.
+
+Each line of the table is computed the same way, so we use a loop that repeats
+once per output line; this is the purpose of the `while` loop
 
     while (fahr <= upper) {
 
-The `while` loop operates as follows: The condition in parentheses is tested. If it is true (`fahr` is less than or equal to `upper`), the body of the loop (the three statements enclosed in braces) is executed. Then the condition is re-tested, and if true, the body is executed again. When the test becomes false (`fahr` exceeds `upper`) the loop ends, and execution continues at the statement that follows the loop. There are no further statements in this program, so it terminates.
+The `while` loop operates as follows: The condition in parentheses is tested.
+If it is true (`fahr` is less than or equal to `upper`), the body of the loop
+(the three statements enclosed in braces) is executed. Then the condition is
+re-tested, and if true, the body is executed again. When the test becomes false
+(`fahr` exceeds `upper`) the loop ends, and execution continues at the
+statement that follows the loop. There are no further statements in this
+program, so it terminates.
 
-The body of a `while` can be one or more statements enclosed in braces, as in the temperature converter, or a single statement without braces, as in
+The body of a `while` can be one or more statements enclosed in braces, as in
+the temperature converter, or a single statement without braces, as in
 
     while (i < j)
         i = 2 * i;
 
     
-In either case, we will always indent the statements controlled by the `while` by one tab stop (which we have shown as four spaces) so you can see at a glance which statements are inside the loop. The indentation emphasizes the logical structure of the program. Although C compilers do not care about how a program looks, proper indentation and spacing are critical in making programs easy for people to read. We recommend writing only one statement per line, and using blanks around operators to clarify grouping. The position of braces is less important, although people hold passionate beliefs. We have chosen one of several popular styles. Pick a style that suits you, then use it consistently.
+In either case, we will always indent the statements controlled by the `while`
+by one tab stop (which we have shown as four spaces) so you can see at a glance
+which statements are inside the loop. The indentation emphasizes the logical
+structure of the program. Although C compilers do not care about how a program
+looks, proper indentation and spacing are critical in making programs easy for
+people to read. We recommend writing only one statement per line, and using
+blanks around operators to clarify grouping. The position of braces is less
+important, although people hold passionate beliefs. We have chosen one of
+several popular styles. Pick a style that suits you, then use it consistently.
 
-Most of the work gets done in the body of the loop. The Celsius temperature is computed and *assigned* to the variable `celsius` by the statement
+Most of the work gets done in the body of the loop. The Celsius temperature is
+computed and *assigned* to the variable `celsius` by the statement
 
 `celsius = 5 * (fahr-32) / 9;`
 
-The reason for multiplying by 5 and dividing by 9 instead of just multiplying by 5/9 is that in C, as in many other languages, integer division *truncates*: any fractional part is discarded. Since 5 and 9 are integers. 5/9 would be truncated to zero and so all the Celsius temperatures would be reported as zero.
-This example also shows a bit more of how printf works. printf is a general-purpose output formatting function, which we will describe in detail in Chapter 7. Its first argument is a string of characters to be printed, with each % indicating where one of the other (second, third, ...) arguments is to be substituted, and in what form it is to be printed. For instance, %d specifies an integer argument, so the statement
+The reason for multiplying by 5 and dividing by 9 instead of just multiplying
+by 5/9 is that in C, as in many other languages, integer division *truncates*:
+any fractional part is discarded. Since 5 and 9 are integers. 5/9 would be
+truncated to zero and so all the Celsius temperatures would be reported as
+zero.
+
+This example also shows a bit more of how printf works. printf is a
+general-purpose output formatting function, which we will describe in detail in
+Chapter 7. Its first argument is a string of characters to be printed, with
+each % indicating where one of the other (second, third, ...) arguments is to
+be substituted, and in what form it is to be printed. For instance, %d
+specifies an integer argument, so the statement
 
 `printf("%d\t%d\n", fahr, celsius);`
 
-causes the values of the two integers `fahr` and `celsius` to be printed, with a tab (`\t`) between them.
+causes the values of the two integers `fahr` and `celsius` to be printed, with
+a tab (`\t`) between them.
 
-Each `%` construction in the first argument of `printf` is paired with the corresponding second argument, third argument, etc.; they must match up properly by number and type, or you will get wrong answers.
+Each `%` construction in the first argument of `printf` is paired with the
+corresponding second argument, third argument, etc.; they must match up
+properly by number and type, or you will get wrong answers.
 
-By the way, `printf` is not part of the C language; there is no input or output defined in C itself. printf is just a useful function from the standard library of functions that are normally accessible to C programs. The behaviour of printf is defined in the ANSI standard, however, so its properties should be the same with any compiler and library that conforms to the standard.
+By the way, `printf` is not part of the C language; there is no input or output
+defined in C itself. printf is just a useful function from the standard library
+of functions that are normally accessible to C programs. The behaviour of
+printf is defined in the ANSI standard, however, so its properties should be
+the same with any compiler and library that conforms to the standard.
 
-In order to concentrate on C itself, we don't talk much about input and output until chapter 7. In particular, we will defer formatted input until then. If you have to input numbers, read the discussion of the function `scanf` in Section 7.4. `scanf` is like `printf`, except that it reads input instead of writing output.
+In order to concentrate on C itself, we don't talk much about input and output
+until chapter 7. In particular, we will defer formatted input until then. If
+you have to input numbers, read the discussion of the function `scanf` in
+Section 7.4. `scanf` is like `printf`, except that it reads input instead of
+writing output.
 
-There are a couple of problems with the temperature conversion program. The simpler one is that the output isn't very pretty because the numbers are not right-justified. That's easy to fix; if we augment each `%d` in the `printf` statement with a width, the numbers printed will be right-justified in their fields. For instance, we might say
+There are a couple of problems with the temperature conversion program. The
+simpler one is that the output isn't very pretty because the numbers are not
+right-justified. That's easy to fix; if we augment each `%d` in the `printf`
+statement with a width, the numbers printed will be right-justified in their
+fields. For instance, we might say
 
 `printf("%3d %6d\n", fahr, celsius);`
 
-to print the first number of each line in a field three digits wide, and the second in a field six digits wide, like this:
+to print the first number of each line in a field three digits wide, and the
+second in a field six digits wide, like this:
 
      0     -17
     20      -6
@@ -279,7 +339,11 @@ to print the first number of each line in a field three digits wide, and the sec
     80      26
     100      37
     
-The more serious problem is that because we have used integer arithmetic, the Celsius temperatures are not very accurate; for instance, 0°F is actually about -17.8°C, not -17. To get more accurate answers, we should use floating-point arithmetic instead of integer. This requires some changes in the program. Here is the second version:
+The more serious problem is that because we have used integer arithmetic, the
+Celsius temperatures are not very accurate; for instance, 0°F is actually about
+-17.8°C, not -17. To get more accurate answers, we should use floating-point
+arithmetic instead of integer. This requires some changes in the program. Here
+is the second version:
 
     #include <stdio.h>
 
@@ -302,11 +366,23 @@ The more serious problem is that because we have used integer arithmetic, the Ce
         }
     }
 
-This is much the same as before, except that `fahr` and `celsius` are declared to be `float` and the formula for conversion is written in a more natural way. We were unable to use `5/9` in the previous version because integer division would truncate it to zero. A decimal point in a constant indicates that it is floating point, however, so `5.0/9.0` is not truncated because it is the ratio of two floating-point values.
+This is much the same as before, except that `fahr` and `celsius` are declared
+to be `float` and the formula for conversion is written in a more natural way.
+We were unable to use `5/9` in the previous version because integer division
+would truncate it to zero. A decimal point in a constant indicates that it is
+floating point, however, so `5.0/9.0` is not truncated because it is the ratio
+of two floating-point values.
 
-If an arithmetic operator has integer operands, an integer operation is performed. If an arithmetic operator has one floating-point operand and one integer operand, however, the integer will be converted to floating point before the operation is done. If we had written `(fahr-32)`, the `32` would be automatically converted to floating point. Nevertheless, writing floating-point constants with explicit decimal points even when they have integral values emphasizes their floating-point nature for human readers.
+If an arithmetic operator has integer operands, an integer operation is
+performed. If an arithmetic operator has one floating-point operand and one
+integer operand, however, the integer will be converted to floating point
+before the operation is done. If we had written `(fahr-32)`, the `32` would be
+automatically converted to floating point. Nevertheless, writing floating-point
+constants with explicit decimal points even when they have integral values
+emphasizes their floating-point nature for human readers.
 
-The detailed rules for when integers are converted to floating point are in Chapter 2. For now, notice that the assignment
+The detailed rules for when integers are converted to floating point are in
+Chapter 2. For now, notice that the assignment
 
     fahr = lower;
 
@@ -314,14 +390,23 @@ and the test
 
     while (fahr <= upper)
 
-also work in the natural way - the `int` is converted to `float` before the operation is done.
-The `printf` conversion specification `%3.0f` says that a floating-point number (here `fahr`) is to be printed at least three characters wide, with no decimal point and no fraction digits. `%6.1f` describes another number (`celsius`) that is to be printed at least six characters wide, with 1 digit after the decimal point. The output looks like this:
+also work in the natural way - the `int` is converted to `float` before the
+operation is done.
+
+The `printf` conversion specification `%3.0f` says that a floating-point number
+(here `fahr`) is to be printed at least three characters wide, with no decimal
+point and no fraction digits. `%6.1f` describes another number (`celsius`) that
+is to be printed at least six characters wide, with 1 digit after the decimal
+point. The output looks like this:
 
      0   -17.8
     20    -6.7
     40     4.4
 
-Width and precision may be omitted from a specification: `%6f` says that the number is to be at least six characters wide; `%.2f` specifies two characters after the decimal point, but the width is not constrained; and `%f` merely says to print the number as floating point.
+Width and precision may be omitted from a specification: `%6f` says that the
+number is to be at least six characters wide; `%.2f` specifies two characters
+after the decimal point, but the width is not constrained; and `%f` merely says
+to print the number as floating point.
 
 String | Description
 -------|-----------------
@@ -332,15 +417,19 @@ String | Description
  %.2f	| print as floating point, 2 characters after decimal point
  %6.2f  | print as floating point, at least 6 wide and 2 after decimal point 
 
-Among others, printf also recognizes `%o` for octal, `%x` for hexadecimal, `%c` for character, `%s` for character string and `%%` for itself.
+Among others, printf also recognizes `%o` for octal, `%x` for hexadecimal, `%c`
+for character, `%s` for character string and `%%` for itself.
 
-**Exercise 1-3**. Modify the temperature conversion program to print a heading above the table.
+**Exercise 1-3**. Modify the temperature conversion program to print a heading
+above the table.
 
-**Exercise 1-4**. Write a program to print the corresponding Celsius to Fahrenheit table.
+**Exercise 1-4**. Write a program to print the corresponding Celsius to
+Fahrenheit table.
 
 #### 1.3 The for statement
 
-There are plenty of different ways to write a program for a particular task. Let's try a variation on the temperature converter.
+There are plenty of different ways to write a program for a particular task.
+Let's try a variation on the temperature converter.
 
     #include <stdio.h>
 
@@ -354,34 +443,65 @@ There are plenty of different ways to write a program for a particular task. Let
     }
 
 
-This produces the same answers, but it certainly looks different. One major change is the elimination of most of the variables; only `fahr` remains, and we have made it an `int`. The lower and upper limits and the step size appear only as constants in the for statement, itself a new construction, and the expression that computes the Celsius temperature now appears as the third argument of `printf` instead of a separate assignment statement.
-This last change is an instance of a general rule - in any context where it is permissible to use the value of some type, you can use a more complicated expression of that type. Since the third argument of `printf` must be a floating-point value to match the `%6.1f`, any floating-point expression can occur here.
+This produces the same answers, but it certainly looks different. One major
+change is the elimination of most of the variables; only `fahr` remains, and we
+have made it an `int`. The lower and upper limits and the step size appear only
+as constants in the for statement, itself a new construction, and the
+expression that computes the Celsius temperature now appears as the third
+argument of `printf` instead of a separate assignment statement.
 
-The `for` statement is a loop, a generalization of the `while`. If you compare it to the earlier while, its operation should be clear. Within the parentheses, there are three parts, separated by semicolons. The first part, the initialization
+This last change is an instance of a general rule - in any context where it is
+permissible to use the value of some type, you can use a more complicated
+expression of that type. Since the third argument of `printf` must be a
+floating-point value to match the `%6.1f`, any floating-point expression can
+occur here.
+
+The `for` statement is a loop, a generalization of the `while`. If you compare
+it to the earlier while, its operation should be clear. Within the parentheses,
+there are three parts, separated by semicolons. The first part, the
+initialization
 
     fahr = 0
 
-is done once, before the loop proper is entered. The second part is the test or condition that controls the loop:
+is done once, before the loop proper is entered. The second part is the test or
+condition that controls the loop:
 
     fahr <= 300
 
-This condition is evaluated; if it is true, the body of the loop (here a single `ptintf`) is executed. Then the increment step
+This condition is evaluated; if it is true, the body of the loop (here a single
+`ptintf`) is executed. Then the increment step
 
     fahr = fahr + 20
 
-is executed, and the condition re-evaluated. The loop terminates if the condition has become false. As with the while, the body of the loop can be a single statement or a group of statements enclosed in braces. The initialization, condition and increment can be any expressions.
+is executed, and the condition re-evaluated. The loop terminates if the
+condition has become false. As with the while, the body of the loop can be a
+single statement or a group of statements enclosed in braces. The
+initialization, condition and increment can be any expressions.
 
-The choice between while and for is arbitrary, based on which seems clearer. The for is usually appropriate for loops in which the initialization and increment are single statements and logically related, since it is more compact than while and it keeps the loop control statements together in one place.
+The choice between while and for is arbitrary, based on which seems clearer.
+The for is usually appropriate for loops in which the initialization and
+increment are single statements and logically related, since it is more compact
+than while and it keeps the loop control statements together in one place.
 
-**Exercise 1-5**. Modify the temperature conversion program to print the table in reverse order, that is, from 300 degrees to 0.
+**Exercise 1-5**. Modify the temperature conversion program to print the table
+in reverse order, that is, from 300 degrees to 0.
 
 #### 1.4 Symbolic Constants
 
-A final observation before we leave temperature conversion forever. It's bad practice to bury "magic numbers" like 300 and 20 in a program; they convey little information to someone who might have to read the program later, and they are hard to change in a systematic way. One way to deal with magic numbers is to give them meaningful names. A `#define` line defines a *symbolic name* or *symbolic constant* to be a particular string of characters:
+A final observation before we leave temperature conversion forever. It's bad
+practice to bury "magic numbers" like 300 and 20 in a program; they convey
+little information to someone who might have to read the program later, and
+they are hard to change in a systematic way. One way to deal with magic numbers
+is to give them meaningful names. A `#define` line defines a *symbolic name* or
+*symbolic constant* to be a particular string of characters:
  
      #define name replacementtext
 
-Thereafter, any occurrence of name (not in quotes and not part of another name) will be replaced by the corresponding *replacement text*. The name has the same form as a variable name: a sequence of letters and digits that begins with a letter. The replacement text can be any sequence of characters; it is not limited to numbers.
+Thereafter, any occurrence of name (not in quotes and not part of another name)
+will be replaced by the corresponding *replacement text*. The name has the same
+form as a variable name: a sequence of letters and digits that begins with a
+letter. The replacement text can be any sequence of characters; it is not
+limited to numbers.
 
     #include <stdio.h>
 
@@ -398,18 +518,30 @@ Thereafter, any occurrence of name (not in quotes and not part of another name) 
             printf("%3d %6.1f\n", fahr, (5.0/9.0)*(fahr-32));
     }
 
-The quantities `LOWER`, `UPPER` and `STEP` are symbolic constants, not variables, so they do not appear in declarations. Symbolic constant names are conventionally written in upper case so they can ber readily distinguished from lower case variable names. Notice that there is no semicolon at the end of a `#define` line.
+The quantities `LOWER`, `UPPER` and `STEP` are symbolic constants, not
+variables, so they do not appear in declarations. Symbolic constant names are
+conventionally written in upper case so they can ber readily distinguished from
+lower case variable names. Notice that there is no semicolon at the end of a
+`#define` line.
 
 #### 1.5 Character Input and Output
 
-We are going to consider a family of related programs for processing character data. You will find that many programs are just expanded versions of the prototypes that we discuss here.
+We are going to consider a family of related programs for processing character
+data. You will find that many programs are just expanded versions of the
+prototypes that we discuss here.
 
-The model of input and output supported by the standard library is very simple. Text input or output, regardless of where it originates or where it goes to, is dealt with as streams of characters. A text stream is a sequence of characters divided into lines; each line consists of zero or more characters followed by a newline character. It is the responsibility of the library to make each input or output stream confirm this model; the C programmer using the library need not worry about how lines are represented outside the program.
+The model of input and output supported by the standard library is very simple.
+Text input or output, regardless of where it originates or where it goes to, is
+dealt with as streams of characters. A text stream is a sequence of characters
+divided into lines; each line consists of zero or more characters followed by a
+newline character. It is the responsibility of the library to make each input
+or output stream confirm this model; the C programmer using the library need
+not worry about how lines are represented outside the program.
 
 The standard library provides several functions for reading or writing one
-character at a time, of which getchar and putchar are the simplest. Each time
-it is called, getchar reads the next input character from a text stream and
-returns that as its value. That is, after
+character at a time, of which `getchar` and `putchar` are the simplest. Each
+time it is called, `getchar` reads the next input character from a text stream
+and returns that as its value. That is, after
 
     c = getchar();
 
@@ -502,7 +634,10 @@ idiom is mastered, easier to read. You'll see this style often. (It's possible
 to get carried away and create impenetrable code, however, a tendency that we
 will try to curb.)
 
-The parentheses around the assignment, within the condition are necessary. The precedence of != is higher than that of =, which means that in the absence of parentheses the relational test != would be done before the assignment =. So the statement
+The parentheses around the assignment, within the condition are necessary. The
+precedence of != is higher than that of =, which means that in the absence of
+parentheses the relational test != would be done before the assignment =. So
+the statement
 
     c = getchar() != EOF
 
@@ -565,11 +700,14 @@ write the loop.
         printf("%.0f\n", nc);
     }
 
-`printf` uses `%f` for both `float` and `double`; `%.0f` suppresses the printing of the decimal point and the fraction part, which is zero.
+`printf` uses `%f` for both `float` and `double`; `%.0f` suppresses the
+printing of the decimal point and the fraction part, which is zero.
 
 The body of this `for` loop is empty, because all the work is done in the test
 and increment parts. But the grammatical rules of C require that a `for`
-statement have a body. The isolated semicolon, called a *null statement*, is there to satisfy that requirement. We put it on a separate line to make it visible.
+statement have a body. The isolated semicolon, called a *null statement*, is
+there to satisfy that requirement. We put it on a separate line to make it
+visible.
 
 Before we leave the character counting program, observe that if the input
 contains no characters, the `while` or `for` test fails on the very first call
@@ -583,7 +721,9 @@ conditions.
 
 ##### 1.5.3 Line Counting
 
-The next program counts input lines. As we mentioned above, the standard library ensures that an input text stream appears as a sequence of lines, each terminated by a newline. Hence, counting lines is just counting newlines:
+The next program counts input lines. As we mentioned above, the standard
+library ensures that an input text stream appears as a sequence of lines, each
+terminated by a newline. Hence, counting lines is just counting newlines:
 
     #include <stdio.h>
 
@@ -700,7 +840,8 @@ known. If `c` is a blank, there is no need to test whether it is a newline or
 tab, so these tests are not made. This isn't particularly important here, but
 is significant in more complicated situations, as we will soon see.
 
-The example also shows an `else`, which specifies an alternative action if the condition part of an if statement is false. The general form is
+The example also shows an `else`, which specifies an alternative action if the
+condition part of an if statement is false. The general form is
 
     if (expression)
         statement1
@@ -713,7 +854,8 @@ performed. If the *expression* is true, *statement1* is executed; if not,
 in braces. In the word count program, the one after the `else` is an `if` that
 controls two statements in braces.
 
-**Exercise 1-11**. How would you test the word count program? What kinds of input are most likely to uncover bugs if there are any?
+**Exercise 1-11**. How would you test the word count program? What kinds of
+input are most likely to uncover bugs if there are any?
 
 **Exercise 1-12**. Write a program that prints its input one word per line.
 
@@ -789,7 +931,8 @@ and convenient; for example `c-'0'` is an integer expression with a value
 between 0 and 9 corresponding to the character `'0'` to `'9'` stored in `c`,
 and thus a valid subscript for the array ndigit.
 
-The decision as to whether a character is a digit, white space, or something else is made with the sequence
+The decision as to whether a character is a digit, white space, or something
+else is made with the sequence
 
     if (c >= '0' && c <= '9')
         ++ndigit[c-'0'];
@@ -815,7 +958,8 @@ satisfied; at that point the corresponding *statement* part is executed, and
 the entire construction is finished. (Any *statement* can be several statements
 enclosed in braces.) If none of the conditions is satisfied, the *statement*
 after the final else is executed if it is present. If the final `else` and
-*statement* are omitted, as in the word count program, no action takes place. There can be any number of
+*statement* are omitted, as in the word count program, no action takes place.
+There can be any number of
 
     else if(condition)
         statement
@@ -831,6 +975,165 @@ write a multi-way branch that is particulary suitable when the condition is
 whether some integer or character expression matches one of a set of constants.
 For contrast, we will present a `switch` version of this program in Section 3.4.
 
-**Exercise 1-13**. Write a program to print a histogram of the lengths of words in its input. It is easy to draw the histogram with the bars horizontal; a vertical orientation is more challenging.
+**Exercise 1-13**. Write a program to print a histogram of the lengths of words
+in its input. It is easy to draw the histogram with the bars horizontal; a
+vertical orientation is more challenging.
 
-**Exercise 1-14**. Write a program to print a histogram of the frequencies of different characters in its input.
+**Exercise 1-14**. Write a program to print a histogram of the frequencies of
+different characters in its input.
+
+#### 1.7 Functions
+
+In C, a function is equivalent to a subroutine or function in Fortran, or a
+procedure or function in Pascal. A function provides a convenient way to
+encapsulate some computation, which can then be used without worrying about its
+implementation. With properly designed functions, it is possible to ignore
+*how* a job is done; knowing *what* is done is sufficient. C makes the sue of functions easy, convinient and efficient; you will often see a short function defined and called only once, just because it clarifies some piece of code.
+So far we have used only functions like `printf`, `getchar` and `putchar` that
+have been provided for us; now it's time to write a few of our own. Since C has
+no exponentiation operator like the `**` of Fortran, let us illustrate the
+mechanics of function definition by writing a function `power(m,n)` to raise an
+integer `m` to a positive integer power `n`. That is, the value of `power(2,5)`
+is 32. This function is not a practical exponentiation routine, since it
+handles only positive powers of small integers, but it's good enough for
+illustration.(The standard library contains a function `pow(x,y)` that computes
+`x`^`y`.)
+
+Here is the function `power` and a main program to exercise it, so you can see
+the whole structure at once.
+
+    #include <stdio.h>
+
+    int power(int m, int n);
+
+        /* test power function */
+        main()
+        {
+            int i;
+
+            for (i = 0; i < 10; ++i)
+                printf("%d %d %d\n", i, power(2,i), power(-3,i));
+            return 0;
+        }
+
+        /* power:  raise base to n-th power; n >= 0 */
+        int power(int base, int n)
+        {
+            int i,  p;
+
+            p = 1;
+            for (i = 1; i <= n; ++i)
+                p = p * base;
+            return p;
+        }
+
+A function definition has this form:
+
+    return-type function-name(parameter declarations, if any)
+    {
+    declarations
+    statements
+    }
+
+Function definitions can appear in any order, and in one source file or
+several, although no function can be split between files. If the source program
+appears in several files, you may have to say more to compile and load it than
+if it all appears in one, but that is an operating system matter, not a
+language attribute. For the moment, we will assume that both functions are in
+the same file, so whatever you have learned about running C programs will still
+work.
+
+The function `power` is called twice by main, in the line
+
+    printf("%d %d %d\n", i, power(2,i), power(-3,i));
+
+Each call passes two arguments to `power`, which each time returns an integer
+to be formatted and printed. In an expression, `power(2,i)` is an integer just
+as 2 and `i` are. (Not all functions produce an integer value; we will take this up in Chapter 4.)
+
+The first line of `power` itself,
+
+    int power(int base, int n)
+
+declares the parameter types and names, and the type of the result that the
+function returns. The names used by `power` for its parameters are local to
+`power`, and are not visible to any other function: other routines can use the
+same names without conflict. This is also true of the variables `i` and `p`:
+the `i` in `power` is unrelated to the `i` in `main`.  
+
+We will generally use *parameter* for a variable named in the parenthesized
+list in a function definition and *argument* for the value used in a call of
+the function. The terms *formal argument* and *actual argument* are sometimes
+used for the same distinction.
+
+The value that `power` computes is returned to `main` by the `return`
+statement. Any expression may follow `return`:
+
+    return expression;
+
+A function need not return a value; a `return` statement with no expression
+causes control, but no useful value, to be returned to the caller, as does
+"falling off the end" of a function by reaching the terminating right brace.
+And the calling function can ignore a value returned by a function.
+
+You may have noticed that there is a `return` statement at the end of `main`.
+Since `main` is a function like any other, it may return a value to its caller,
+which is in effect the environment in which the program was executed.
+Typically, a return value of zero implies normal termination; non-zero values
+signal unusual or erroneous termination conditions. In the interests of
+simplicity, we have omitted `return` statements from our `main` functions up to
+this point, but we will include them hereafter, as a reminder that programs
+should return status to their environment.
+
+The declaration
+
+    int power(int base, int n);
+
+just before `main` says that `power` is a function that expects two `int`
+arguments and returns an `int`. This declaration, which is called a *function
+prototype*, has to agree with the definition and uses of `power`. It is an error if the definition of a function or any uses of it do not agree with its prototype.
+
+Parameter names need not agree. Indeed, parameter names are optional in a function prototype, so for the prototype we could have written
+
+    int power(int, int);
+
+Well-chosen names are good documentation however, so we will often use them.
+
+A note of history: the biggest change between ANSI C and earlier versions is
+how functions are declared and defined. In the original definition of C, the
+`power` function would have been written like this:
+
+    /* power:  raise base to n-th power; n >= 0 */
+    /*         (old-style version) */
+    power(base, n)
+    int base, n;
+    {
+        int i, p;
+
+        p = 1;
+        for (i = 1; i <= n; ++i)
+            p = p * base;
+        return p;
+    }
+
+The parameters are named between the parentheses, and their types are declared
+before opening the left brace; undeclared parameters are taken as `int`. (The
+body of the function is the same as before.)
+
+The declaration of power at the beginning of the program would have looked like
+this:
+
+    int power();
+
+No parameter list was permitted, so the compiler could not readily check that
+power was being called correctly. Indeed, since by default power would have
+been assumed to return an int, the entire declaration might well have been
+omitted.
+
+The new syntax of function prototypes makes it much easier for a compiler to
+detect errors in the number of arguments or their types. The old style of
+declaration and definition still works in ANSI C, at least for a transition
+period, but we strongly recommend that you use the new form when you have a
+compiler that supports it.
+
+**Exercise 1.15**. Rewrite the temperature conversion program of Section 1.2 to use a function for conversion.
