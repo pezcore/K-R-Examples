@@ -44,11 +44,12 @@ your output went. With these mechanical details mastered, everything else is
 comparatively easy.
 
 In C, the program to print `hello, world` is
-
+```{#mycode .c}
     #include <stdio.h>
     main() {
         printf("hello, world\n");
     }
+```
 
 Just how to run this program depends on the system you are using. As a specific
 example, on the UNIX operating system you must create the program in a file
