@@ -59,7 +59,7 @@ whose name ends in `.c`, such as `hello.c`, then compile it with the command:
 
 If you haven't botched anything, such as omitting a character or misspelling
 something, the compilation will proceed silently, and make an executable file
-called a.out. If you run a.out by typing the command
+called `a.out`. If you run `a.out` by typing the command
 
     a.out
    
@@ -96,15 +96,14 @@ indicated by the empty list `( )`.
 
 
 **The First C Program :**
-
-    #include <stdio.h>       /* include information about standard library */
-    main() {                 /* define a function called main that received no
-                                argument values */
+```c
+#include <stdio.h>       /* include information about standard library */
+main() {                 /* define a function called main that received no
+                            argument values */
     /* statements of main are enclosed in braces */
-        printf("hello, world\n"); /* main calls library function printf */
-    }                             /* \n represents the newline
-    character*/
-
+    printf("hello, world\n"); /* main calls library function printf */
+}                             /* \n represents the newline character*/
+```
 
 The statements of a function are enclosed in braces `{ }`. The function main
 contains only one statement,
@@ -134,16 +133,16 @@ the C compiler will produce an error message.
 `printf` never supplies a newline character automatically, so several calls may
 be used to build up an output line in stages. Our first program could just as
 well have been written
+```c
+#include <stdio.h>
 
-    #include <stdio.h>
- 
-    main()
-    {
-      printf("hello, ");
-      printf("world");
-      printf("\n");
-    }
-
+main()
+{
+    printf("hello, ");
+    printf("world");
+    printf("\n");
+}
+```
 to produce identical output.
 
 Notice that `\n` represents only a single character. An *escape sequence* like
@@ -185,30 +184,32 @@ The program itself still consists of the definition of a single function named
 main. It is longer than the one that printed `hello, world`, but not
 complicated. It introduces several new ideas, including comments, declarations,
 variables, arithmetic expressions, loops , and formatted output.
+```c
+#include <stdio.h>
 
-    #include <stdio.h>
- 
-    /* print Fahrenheit-Celsius table
-        for fahr = 0, 20, ..., 300 */
-    main()
-    {
-      int fahr, celsius;
-      int lower, upper, step;
- 
-      lower = 0;      /* lower limit of temperature scale */
-      upper = 300;    /* upper limit */
-      step = 20;      /* step size */
- 
-      fahr = lower;
-      while (fahr <= upper) {
-          celsius = 5 * (fahr-32) / 9;
-          printf("%d\t%d\n", fahr, celsius);
-          fahr = fahr + step;
-      }
+/* print Fahrenheit-Celsius table
+    for fahr = 0, 20, ..., 300 */
+main()
+{
+    int fahr, celsius;
+    int lower, upper, step;
+
+    lower = 0;      /* lower limit of temperature scale */
+    upper = 300;    /* upper limit */
+    step = 20;      /* step size */
+
+    fahr = lower;
+    while (fahr <= upper) {
+        celsius = 5 * (fahr-32) / 9;
+        printf("%d\t%d\n", fahr, celsius);
+        fahr = fahr + step;
     }
+}
+```
 
 The two lines
-```
+
+```c
 /* print Fahrenheit-Celsius table 
 for fahr = 0, 20, ..., 300 */
 ```
@@ -221,9 +222,10 @@ In C, all variables must be declared before they are used, usually at the
 beginning of the function before any executable statements. A declaration
 announces the properties of variables; it consists of a name and a list of
 variables, such as
-```
-    int fahr, celsius;
-    int lower, upper, step;
+
+```c
+int fahr, celsius;
+int lower, upper, step;
 ```
 
 The type `int` means that the variables listed are integers; by contrast with
@@ -235,8 +237,8 @@ significant digits and magnitude generally between about 10-38 and 1038.
 
 C provides several other data types besides int and float, including:
 
-name   | description
--------|-----------------------------
+name     | description
+---------|-----------------------------
 `char`   |	character - a single byte
 `short`  |	short integer
 `long`   |	long integer
@@ -250,17 +252,20 @@ The size of these objects is also machine-dependent. There are also *arrays*,
 Computation in the temperature conversion program begins with the *assignment
 statements*
 
-    lower = 0;
-    upper = 300;
-    step = 20;
-    
+```c
+lower = 0;
+upper = 300;
+step = 20;
+```
+
 which set the variables to their initial values. Individual statements are
 terminated by semicolons.
 
 Each line of the table is computed the same way, so we use a loop that repeats
 once per output line; this is the purpose of the `while` loop
-
-    while (fahr <= upper) {
+```c
+while (fahr <= upper) {
+```
 
 The `while` loop operates as follows: The condition in parentheses is tested.
 If it is true (`fahr` is less than or equal to `upper`), the body of the loop
@@ -272,10 +277,10 @@ program, so it terminates.
 
 The body of a `while` can be one or more statements enclosed in braces, as in
 the temperature converter, or a single statement without braces, as in
-
-    while (i < j)
-        i = 2 * i;
-
+```c
+while (i < j)
+    i = 2 * i;
+```
     
 In either case, we will always indent the statements controlled by the `while`
 by one tab stop (which we have shown as four spaces) so you can see at a glance
@@ -349,27 +354,28 @@ Celsius temperatures are not very accurate; for instance, 0°F is actually about
 -17.8°C, not -17. To get more accurate answers, we should use floating-point
 arithmetic instead of integer. This requires some changes in the program. Here
 is the second version:
+```c
+#include <stdio.h>
 
-    #include <stdio.h>
+/* print Fahrenheit-Celsius table for fahr = 0, 20, ..., 300; floating-point
+ * version */
 
-    /* print Fahrenheit-Celsius table
-        for fahr = 0, 20, ..., 300; floating-point version */
-    main()
-    {
-        float fahr, celsius;
-        float lower, upper, step;
+main() {
+    float fahr, celsius;
+    float lower, upper, step;
 
-        lower = 0;      /* lower limit of temperatuire scale */
-        upper = 300;    /* upper limit */
-        step = 20;      /* step size */
+    lower = 0;      /* lower limit of temperatuire scale */
+    upper = 300;    /* upper limit */
+    step = 20;      /* step size */
 
-        fahr = lower;
-        while (fahr <= upper) {
-            celsius = (5.0/9.0) * (fahr-32.0);
-            printf("%3.0f %6.1f\n", fahr, celsius);
-            fahr = fahr + step;
-        }
+    fahr = lower;
+    while (fahr <= upper) {
+        celsius = (5.0/9.0) * (fahr-32.0);
+        printf("%3.0f %6.1f\n", fahr, celsius);
+        fahr = fahr + step;
     }
+}
+```
 
 This is much the same as before, except that `fahr` and `celsius` are declared
 to be `float` and the formula for conversion is written in a more natural way.
@@ -413,14 +419,14 @@ number is to be at least six characters wide; `%.2f` specifies two characters
 after the decimal point, but the width is not constrained; and `%f` merely says
 to print the number as floating point.
 
-String | Description
--------|-----------------
- %d	    | print as decimal integer
- %6d	| print as decimal integer, at least 6 characters wide
- %f	    | print as floating point
- %6f	| print as floating point, at least 6 characters wide
- %.2f	| print as floating point, 2 characters after decimal point
- %6.2f  | print as floating point, at least 6 wide and 2 after decimal point 
+String     | Description
+-----------|-----------------
+ `%d`	   | print as decimal integer
+ `%6d`	   | print as decimal integer, at least 6 characters wide
+ `%f`	   | print as floating point
+ `%6f`	   | print as floating point, at least 6 characters wide
+ `%.2f`	   | print as floating point, 2 characters after decimal point
+ `%6.2f`   | print as floating point, at least 6 wide and 2 after decimal point 
 
 Among others, printf also recognizes `%o` for octal, `%x` for hexadecimal, `%c`
 for character, `%s` for character string and `%%` for itself.
@@ -435,18 +441,17 @@ Fahrenheit table.
 
 There are plenty of different ways to write a program for a particular task.
 Let's try a variation on the temperature converter.
+```c
+#include <stdio.h>
 
-    #include <stdio.h>
+/* print Fahrenheit-Celsius table */
+main() {
+    int fahr;
 
-    /* print Fahrenheit-Celsius table */
-    main()
-    {
-        int fahr;
-
-        for (fahr = 0; fahr <= 300; fahr = fahr + 20)
-            printf("%3d %6.1f\n", fahr, (5.0/9.0)*(fahr-32));
-    }
-
+    for (fahr = 0; fahr <= 300; fahr = fahr + 20)
+        printf("%3d %6.1f\n", fahr, (5.0/9.0)*(fahr-32));
+}
+```
 
 This produces the same answers, but it certainly looks different. One major
 change is the elimination of most of the variables; only `fahr` remains, and we
@@ -507,21 +512,22 @@ will be replaced by the corresponding *replacement text*. The name has the same
 form as a variable name: a sequence of letters and digits that begins with a
 letter. The replacement text can be any sequence of characters; it is not
 limited to numbers.
+```c
+#include <stdio.h>
 
-    #include <stdio.h>
+#define LOWER  0     /* lower limit of table */
+#define UPPER  300   /* upper limit */
+#define STEP   20    /* step size */
 
-    #define LOWER  0     /* lower limit of table */
-    #define UPPER  300   /* upper limit */
-    #define STEP   20    /* step size */
+/* print Fahrenheit-Celsius table */
+main()
+{
+    int fahr;
 
-    /* print Fahrenheit-Celsius table */
-    main()
-    {
-        int fahr;
-
-        for (fahr = LOWER; fahr <= UPPER; fahr = fahr + STEP)
-            printf("%3d %6.1f\n", fahr, (5.0/9.0)*(fahr-32));
-    }
+    for (fahr = LOWER; fahr <= UPPER; fahr = fahr + STEP)
+        printf("%3d %6.1f\n", fahr, (5.0/9.0)*(fahr-32));
+}
+```
 
 The quantities `LOWER`, `UPPER` and `STEP` are symbolic constants, not
 variables, so they do not appear in declarations. Symbolic constant names are
@@ -573,20 +579,21 @@ program that copies its input to its output one character at a time:
             read a character
 
 Converting this into C gives:
+```c
+#include <stdio.h>
 
-    #include <stdio.h>
+/* copy input to output; 1st version  */
+main()
+{
+    int c;
 
-    /* copy input to output; 1st version  */
-    main()
-    {
-        int c;
-
+    c = getchar();
+    while (c != EOF) {
+        putchar(c);
         c = getchar();
-        while (c != EOF) {
-            putchar(c);
-            c = getchar();
-        }
     }
+}
+```
 
 The relational operator `!=` means "not equal to".
 
@@ -617,16 +624,18 @@ after the assignment. This means that a assignment can appear as part of a
 larger expression. If the assignment of a character to c is put inside the test
 part of a while loop, the copy program can be written this way:
 
-    #include <stdio.h>
+```c
+#include <stdio.h>
 
-    /* copy input to output; 2nd version  */
-    main()
-    {
-        int c;
+/* copy input to output; 2nd version  */
+main()
+{
+    int c;
 
-        while ((c = getchar()) != EOF)
-            putchar(c);
-    }
+    while ((c = getchar()) != EOF)
+        putchar(c);
+}
+```
 
 The while gets a character, assigns it to c, and then tests whether the
 character was the end-of-file signal. If it was not, the body of the while is
@@ -661,15 +670,17 @@ not the call of getchar returned end of file. (More on this in Chapter 2.)
 
 The next program counts characters; it is similar to the copy program.
 
-    #include <stdio.h>
-    /* count characters in input; 1st version */
-    main( ) {
-        long nc;
-        nc = 0;
-        while (getchar() 1= EOF)
-            ++nc;
-        printf ("%ld\n", nc l ;
-    }
+```c
+#include <stdio.h>
+/* count characters in input; 1st version */
+main( ) {
+    long nc;
+    nc = 0;
+    while (getchar() 1= EOF)
+        ++nc;
+    printf ("%ld\n", nc l ;
+}
+```
 
 The statement
 
@@ -693,17 +704,19 @@ with even bigger numbers by using a double (double precision `float`). We will
 also use a `for` statement instead of a `while`, to illustrate another way to
 write the loop.
 
-    #include <stdio.h>
+```c
+#include <stdio.h>
 
-    /* count characters in input; 2nd version */
-    main()
-    {
-        double nc;
+/* count characters in input; 2nd version */
+main()
+{
+    double nc;
 
-        for (nc = 0; gechar() != EOF; ++nc)
-            ;
-        printf("%.0f\n", nc);
-    }
+    for (nc = 0; gechar() != EOF; ++nc)
+        ;
+    printf("%.0f\n", nc);
+}
+```
 
 `printf` uses `%f` for both `float` and `double`; `%.0f` suppresses the
 printing of the decimal point and the fraction part, which is zero.
@@ -729,20 +742,21 @@ conditions.
 The next program counts input lines. As we mentioned above, the standard
 library ensures that an input text stream appears as a sequence of lines, each
 terminated by a newline. Hence, counting lines is just counting newlines:
+```c
+#include <stdio.h>
 
-    #include <stdio.h>
+/* count lines in input */
+main()
+{
+    int c, nl;
 
-    /* count lines in input */
-    main()
-    {
-        int c, nl;
-
-        nl = 0;
-        while ((c = getchar()) != EOF)
-            if (c == '\n')
-                ++nl;
-        printf("%d\n", nl);
-    }
+    nl = 0;
+    while ((c = getchar()) != EOF)
+        if (c == '\n')
+            ++nl;
+    printf("%d\n", nl);
+}
+```
 
 The body of the `while` now consists of an `if`, which in turn controls the
 increment `++nl`. The `if` statement tests the parenthesized condition, and if
@@ -788,31 +802,33 @@ characters, with the loose definition that a word is any sequence of characters
 that does not contain a blank, tab or newline. This is a bare-bones version of
 the UNIX program `wc`.
 
-    #include <stdio.h>
+```c
+#include <stdio.h>
 
-    #define IN   1  /* inside a word */
-    #define OUT  0  /* outside a word */
+#define IN   1  /* inside a word */
+#define OUT  0  /* outside a word */
 
-    /* count lines, words, and characters in input */
-    main()
-    {
-        int c, nl, nw, nc, state;
+/* count lines, words, and characters in input */
+main()
+{
+    int c, nl, nw, nc, state;
 
-        state = OUT;
-        nl = nw = nc = 0;
-        while ((c = getchar()) != EOF) {
-            ++nc;
-            if (c == '\n')
-                ++nl;
-            if (c == ' ' || c == '\n' || c = '\t')
-                state = OUT;
-            else if (state == OUT) {
-                state = IN;
-                ++nw;
-            }
+    state = OUT;
+    nl = nw = nc = 0;
+    while ((c = getchar()) != EOF) {
+        ++nc;
+        if (c == '\n')
+            ++nl;
+        if (c == ' ' || c == '\n' || c = '\t')
+            state = OUT;
+        else if (state == OUT) {
+            state = IN;
+            ++nw;
         }
-        printf("%d %d %d\n", nl, nw, nc);
     }
+    printf("%d %d %d\n", nl, nw, nc);
+}
+```
 
 Every time the program encounters the first character of a word, it counts one
 more word. The variable state records whether the program is currently in a
@@ -875,32 +891,34 @@ There are twelve categories of input, so it is convenient to use an array to
 hold the number of occurrences of each digit, rather than ten individual
 variables. Here is one version of the program:
 
-    #include <stdio.h>
+```c
+#include <stdio.h>
 
-    /* count digits, white space, others */
-    main()
-    {
-        int c, i, nwhite, nother;
-        int ndigit[10];
+/* count digits, white space, others */
+main()
+{
+    int c, i, nwhite, nother;
+    int ndigit[10];
 
-        nwhite = nother = 0;
-        for (i = 0; i < 10; ++i)
-            ndigit[i] = 0;
+    nwhite = nother = 0;
+    for (i = 0; i < 10; ++i)
+        ndigit[i] = 0;
 
-        while ((c = getchar()) != EOF)
-            if (c >= '0' && c <= '9')
-                ++ndigit[c-'0'];
-            else if (c == ' ' || c == '\n' || c == '\t')
-                ++nwhite;
-            else
-                ++nother;
+    while ((c = getchar()) != EOF)
+        if (c >= '0' && c <= '9')
+            ++ndigit[c-'0'];
+        else if (c == ' ' || c == '\n' || c == '\t')
+            ++nwhite;
+        else
+            ++nother;
 
-        printf("digits =");
-        for (i = 0; i < 10; ++i)
-            printf(" %d", ndigit[i]);
-        printf(", white space = %d, other = %d\n",
-            nwhite, nother);
-    }
+    printf("digits =");
+    for (i = 0; i < 10; ++i)
+        printf(" %d", ndigit[i]);
+    printf(", white space = %d, other = %d\n",
+        nwhite, nother);
+}
+```
 
 The output of this program on itself is
 
@@ -939,12 +957,14 @@ and thus a valid subscript for the array ndigit.
 The decision as to whether a character is a digit, white space, or something
 else is made with the sequence
 
-    if (c >= '0' && c <= '9')
-        ++ndigit[c-'0'];
-    else if (c == ' ' || c == '\n' || c == '\t')
-        ++nwhite;
-    else
-        ++nother;
+```c
+if (c >= '0' && c <= '9')
+    ++ndigit[c-'0'];
+else if (c == ' ' || c == '\n' || c == '\t')
+    ++nwhite;
+else
+    ++nother;
+```
 
 The pattern
 
@@ -1005,36 +1025,36 @@ integer `m` to a positive integer power `n`. That is, the value of `power(2,5)`
 is 32. This function is not a practical exponentiation routine, since it
 handles only positive powers of small integers, but it's good enough for
 illustration.(The standard library contains a function `pow(x,y)` that computes
-`x`^`y`.)
+`x`<sup>`y`</sup>.)
 
 Here is the function `power` and a main program to exercise it, so you can see
 the whole structure at once.
+```c
+#include <stdio.h>
 
-    #include <stdio.h>
+int power(int m, int n);
 
-    int power(int m, int n);
+/* test power function */
+main()
+{
+    int i;
 
-        /* test power function */
-        main()
-        {
-            int i;
+    for (i = 0; i < 10; ++i)
+        printf("%d %d %d\n", i, power(2,i), power(-3,i));
+    return 0;
+}
 
-            for (i = 0; i < 10; ++i)
-                printf("%d %d %d\n", i, power(2,i), power(-3,i));
-            return 0;
-        }
+/* power:  raise base to n-th power; n >= 0 */
+int power(int base, int n)
+{
+    int i,  p;
 
-        /* power:  raise base to n-th power; n >= 0 */
-        int power(int base, int n)
-        {
-            int i,  p;
-
-            p = 1;
-            for (i = 1; i <= n; ++i)
-                p = p * base;
-            return p;
-        }
-
+    p = 1;
+    for (i = 1; i <= n; ++i)
+        p = p * base;
+    return p;
+}
+```
 A function definition has this form:
 
     return-type function-name(parameter declarations, if any)
@@ -1053,7 +1073,9 @@ work.
 
 The function `power` is called twice by main, in the line
 
+```c
     printf("%d %d %d\n", i, power(2,i), power(-3,i));
+```
 
 Each call passes two arguments to `power`, which each time returns an integer
 to be formatted and printed. In an expression, `power(2,i)` is an integer just
@@ -1062,7 +1084,9 @@ this up in Chapter 4.)
 
 The first line of `power` itself,
 
+```c
     int power(int base, int n)
+```
 
 declares the parameter types and names, and the type of the result that the
 function returns. The names used by `power` for its parameters are local to
@@ -1115,18 +1139,20 @@ A note of history: the biggest change between ANSI C and earlier versions is
 how functions are declared and defined. In the original definition of C, the
 `power` function would have been written like this:
 
-    /* power:  raise base to n-th power; n >= 0 */
-    /*         (old-style version) */
-    power(base, n)
-    int base, n;
-    {
-        int i, p;
+```c
+/* power:  raise base to n-th power; n >= 0 */
+/*         (old-style version) */
+power(base, n)
+int base, n;
+{
+    int i, p;
 
-        p = 1;
-        for (i = 1; i <= n; ++i)
-            p = p * base;
-        return p;
-    }
+    p = 1;
+    for (i = 1; i <= n; ++i)
+        p = p * base;
+    return p;
+}
+```
 
 The parameters are named between the parentheses, and their types are declared
 before opening the left brace; undeclared parameters are taken as `int`. (The
@@ -1135,7 +1161,9 @@ body of the function is the same as before.)
 The declaration of power at the beginning of the program would have looked like
 this:
 
+```c
     int power();
+```
 
 No parameter list was permitted, so the compiler could not readily check that
 power was being called correctly. Indeed, since by default power would have
@@ -1166,15 +1194,17 @@ compact programs with fewer extraneous variables, because parameters can be
 treated as conveniently initialized local variables in the called routine. For
 example, here is a version of `power` that makes use of this property.
 
-    /* power:  raise base to n-th power; n >= 0; version 2 */
-    int power(int base, int n)
-    {
-        int p;
+```c
+/* power:  raise base to n-th power; n >= 0; version 2 */
+int power(int base, int n)
+{
+    int p;
 
-        for (p = 1; n > 0; --n)
-            p = p * base;
-        return p;
-    }
+    for (p = 1; n > 0; --n)
+        p = p * base;
+    return p;
+}
+```
 
 The parameter `n` is used as a temporary variable, and is counted down (a `for`
 loop that runs backwards) until it becomes zero; there is no longer a need for
@@ -1225,62 +1255,66 @@ to a safe place.
 Finally, we need a `main` program to control `getline` and `copy`. Here is the
 result.
 
-    #include <stdio.h>
-    #define MAXLINE 1000   /* maximum input line length */
+```c
+#include <stdio.h>
+#define MAXLINE 1000   /* maximum input line length */
 
-    int getline(char line[], int maxline);
-    void copy(char to[], char from[]);
+int getline(char line[], int maxline);
+void copy(char to[], char from[]);
 
-    /* print the longest input line */
-    main()
-    {
-        int len;            /* current line length */
-        int max;            /* maximum length seen so far */
-        char line[MAXLINE];    /* current input line */
-        char longest[MAXLINE]; /* longest line saved here */
+/* print the longest input line */
+main()
+{
+    int len;            /* current line length */
+    int max;            /* maximum length seen so far */
+    char line[MAXLINE];    /* current input line */
+    char longest[MAXLINE]; /* longest line saved here */
 
-        max = 0;
-        while ((len = getline(line, MAXLINE)) > 0)
-            if (len > max) {
-                max = len;
-                copy(longest, line);
-            }
-        if (max > 0)  /* there was a line */
-            printf("%s", longest);
-        return 0;
-    }
-
-    /* getline:  read a line into s, return length  */
-    int getline(char s[],int lim)
-    {
-        int c, i;
-
-        for (i=0; i < lim-1 && (c=getchar())!=EOF && c!='\n'; ++i)
-            s[i] = c;
-        if (c == '\n') {
-            s[i] = c;
-            ++i;
+    max = 0;
+    while ((len = getline(line, MAXLINE)) > 0)
+        if (len > max) {
+            max = len;
+            copy(longest, line);
         }
-        s[i] = '\0';
-        return i;
-    }
+    if (max > 0)  /* there was a line */
+        printf("%s", longest);
+    return 0;
+}
 
-    /* copy:  copy 'from' into 'to'; assume to is big enough */
-    void copy(char to[], char from[])
-    {
-        int i;
+/* getline:  read a line into s, return length  */
+int getline(char s[],int lim)
+{
+    int c, i;
 
-        i = 0;
-        while ((to[i] = from[i]) != '\0')
-            ++i;
+    for (i=0; i < lim-1 && (c=getchar())!=EOF && c!='\n'; ++i)
+        s[i] = c;
+    if (c == '\n') {
+        s[i] = c;
+        ++i;
     }
+    s[i] = '\0';
+    return i;
+}
+
+/* copy:  copy 'from' into 'to'; assume to is big enough */
+void copy(char to[], char from[])
+{
+    int i;
+
+    i = 0;
+    while ((to[i] = from[i]) != '\0')
+        ++i;
+}
+```
 
 The functions `getline` and `copy` are declared at the beginning of the
 program, which we assume is contained in one file.  `main` and `getline`
 communicate through a pair of arguments and a returned value. In `getline`, the
 arguments are declared by the line
 
+```c
     int getline(char s[], int lim);
+```
 
 which specifies that the first argument, `s,` is an array, and the second,
 `lim`, is an integer. The purpose of supplying the size of an array in a
@@ -1370,62 +1404,64 @@ context. To make the discussion concrete, let us rewrite the longest-line
 program with line, longest, and max as external variables. This requires
 changing the calls, declarations, and bodies of all three functions.
 
-    #include <stdio.h>
+```c
+#include <stdio.h>
 
-    #define MAXLINE 1000    /* maximum input line size */
+#define MAXLINE 1000    /* maximum input line size */
 
-    int max;                /* maximum length seen so far */
-    char line[MAXLINE];     /* current input line */
-    char longest[MAXLINE];  /* longest line saved here */
+int max;                /* maximum length seen so far */
+char line[MAXLINE];     /* current input line */
+char longest[MAXLINE];  /* longest line saved here */
 
-    int getline(void);
-    void copy(void);
+int getline(void);
+void copy(void);
 
-    /* print longest input line; specialized version */
-    main()
-    {
-        int len;
-        extern int max;
-        extern char longest[];
+/* print longest input line; specialized version */
+main()
+{
+    int len;
+    extern int max;
+    extern char longest[];
 
-        max = 0;
-        while ((len = getline()) > 0)
-            if (len > max) {
-                max = len;
-                copy();
-            }
-        if (max > 0)  /* there was a line */
-            printf("%s", longest);
-        return 0;
-    }
-
-    /* getline:  specialized version */
-    int getline(void)
-    {
-        int c, i;
-        extern char line[];
-
-        for (i = 0; i < MAXLINE - 1
-                && (c=getchar)) != EOF && c != '\n'; ++i)
-                    line[i] = c;
-        if (c == '\n') {
-            line[i] = c;
-            ++i;
+    max = 0;
+    while ((len = getline()) > 0)
+        if (len > max) {
+            max = len;
+            copy();
         }
-        line[i] = '\0';
-        return i;
-    }
+    if (max > 0)  /* there was a line */
+        printf("%s", longest);
+    return 0;
+}
 
-    /* copy: specialized version */
-    void copy(void)
-    {
-        int i;
-        extern char line[], longest[];
+/* getline:  specialized version */
+int getline(void)
+{
+    int c, i;
+    extern char line[];
 
-        i = 0;
-        while ((longest[i] = line[i]) != '\0')
-            ++i;
+    for (i = 0; i < MAXLINE - 1
+            && (c=getchar)) != EOF && c != '\n'; ++i)
+                line[i] = c;
+    if (c == '\n') {
+        line[i] = c;
+        ++i;
     }
+    line[i] = '\0';
+    return i;
+}
+
+/* copy: specialized version */
+void copy(void)
+{
+    int i;
+    extern char line[], longest[];
+
+    i = 0;
+    while ((longest[i] = line[i]) != '\0')
+        ++i;
+}
+```
 
 The external variables in `main`, `getline` and `copy` are defined by the first
 lines of the example above, which state their type and cause storage to be
