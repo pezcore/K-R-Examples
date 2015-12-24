@@ -1,6 +1,9 @@
 #Chapter 3 - Control Flow
 
-The control-flow of a language specify the order in which computations are performed. We have already met the most common control-flow constructions in earlier examples; here we will complete the set, and be more precise about the ones discussed before.
+The control-flow of a language specify the order in which computations are
+performed. We have already met the most common control-flow constructions in
+earlier examples; here we will complete the set, and be more precise about the
+ones discussed before.
 
 ## 3.1 Statements and Blocks
 An expression such as `x = 0` or `i++` or `printf(...)` becomes a statement
@@ -65,7 +68,8 @@ if (n > 0)
         z = b;
 ```
 
-the `else` goes to the inner `if`, as we have shown by indentation. If that isn't what you want, braces must be used to force the proper association:
+the `else` goes to the inner `if`, as we have shown by indentation. If that
+isn't what you want, braces must be used to force the proper association:
 
 ```c
 if (n > 0) {
@@ -517,4 +521,124 @@ correctly, regardless of the machine on which it runs.
 `n` into a base `b` character representation in the string `s`. In particular,
 `itob(n,s,16)` formats `s` as a hexadecimal integer in `s`.
 
-**Exercise 3-6**. Write a version of `itoa` that accepts three arguments instead of two. The third argument is a minimum field width; the converted number must be padded with blanks on the left if necessary to make it wide enough. 
+**Exercise 3-6**. Write a version of `itoa` that accepts three arguments
+instead of two. The third argument is a minimum field width; the converted
+number must be padded with blanks on the left if necessary to make it wide
+enough. 
+
+## 3.7 Break and Continue
+
+It is sometimes convenient to be able to exit from a loop other than by testing
+at the top or bottom. The `break` statement provides an early exit from for,
+`while`, and `do`, just as from `switch`. A `break` causes the innermost
+enclosing loop or `switch` to be exited immediately.
+
+The following function, `trim`, removes trailing blanks, tabs and newlines from
+the end of a string, using a `break` to exit from a loop when the rightmost non-blank, non-tab, non-newline is found.
+
+```c
+/* trim:  remove trailing blanks, tabs, newlines */
+int trim(char s[])
+{
+    int n;
+
+    for (n = strlen(s)-1; n >= 0; n--)
+        if (s[n] != ' ' && s[n] != '\t' && s[n] != '\n')
+            break;
+    s[n+1] = '\0';
+    return n;
+}
+```
+
+`strlen` returns the length of the string. The `for` loop starts at the end and
+scans backwards looking for the first character that is not a blank or tab or
+newline. The loop is broken when one is found, or when `n` becomes negative
+(that is, when the entire string has been scanned). You should verify that this
+is correct behavior even when the string is empty or contains only white space
+characters.
+
+The `continue` statement is related to `break`, but less often used; it causes
+the next iteration of the enclosing `for`, `while`, or `do` loop to begin. In
+the `while` and `do`, this means that the test part is executed immediately; in
+the `for`, control passes to the increment step. The `continue` statement
+applies only to loops, not to `switch`. A `continue` inside a `switch` inside a
+loop causes the next loop iteration.
+
+As an example, this fragment processes only the non-negative elements in the
+array `a`; negative values are skipped.
+
+```c
+for (i = 0; i < n; i++)
+    if (a[i] < 0)   /* skip negative elements */
+        continue;
+    ... /* do positive elements */
+```
+
+The `continue` statement is often used when the part of the loop that follows
+is complicated, so that reversing a test and indenting another level would nest
+the program too deeply. 
+
+## 3.8 Goto and labels
+
+C provides the infinitely-abusable `goto` statement, and labels to branch to.
+Formally, the `goto` statement is never necessary, and in practice it is almost
+always easy to write code without it. We have not used `goto` in this book.
+
+Nevertheless, there are a few situations where `goto`s may find a place. The
+most common is to abandon processing in some deeply nested structure, such as
+breaking out of two or more loops at once. The `break` statement cannot be used
+directly since it only exits from the innermost loop. Thus:
+
+```c
+    for ( ... )
+        for ( ... ) {
+            ...
+            if (disaster)
+                goto error;
+        }
+    ...
+error:
+    /* clean up the mess */
+```
+
+This organization is handy if the error-handling code is non-trivial, and if
+errors can occur in several places.
+
+A label has the same form as a variable name, and is followed by a colon. It
+can be attached to any statement in the same function as the `goto`. The scope of a label is the entire function.
+
+As another example, consider the problem of determining whether two arrays `a`
+and `b` have an element in common. One possibility is
+
+```c
+    for (i = 0; i < n; i++)
+        for (j = 0; j < m; j++)
+            if (a[i] == b[j])
+                goto found;
+    /* didn't find any common element */
+    ...
+found:
+    /* got one: a[i] == b[j] */
+    ...
+```
+
+Code involving a `goto` can always be written without one, though perhaps at the price of some repeated tests or an extra variable. For example, the array search becomes
+
+```c
+found = 0;
+for (i = 0; i < n && !found; i++)
+    for (j = 0; j < m && !found; j++)
+        if (a[i] == b[j])
+            found = 1;
+if (found)
+    /* got one: a[i-1] == b[j-1] */
+    ...
+else
+    /* didn't find any common element */
+    ...
+```
+
+With a few exceptions like those cited here, code that relies on `goto`
+statements is generally harder to understand and to maintain than code without
+`goto`s. Although we are not dogmatic about the matter, it does seem that
+`goto` statements should be used rarely, if at all. 
