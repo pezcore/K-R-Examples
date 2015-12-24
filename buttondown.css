@@ -141,6 +141,7 @@ sup /* Superscripts. Pandoc: The 2^nd^ try. */
     
 em /* Emphasis. Markdown: *emphasis* or _emphasis_ */
     {
+    color: hsla(120,75%,25%,1);
     }
     
 em > em /* Emphasis within emphasis: *This is all *emphasized* except that* */
@@ -217,16 +218,13 @@ p.caption /* Pandoc figure-style caption within div.figure */
 
 pre, code 
     {
-    background-color: #fdf7ee;
-    /* BEGIN word wrap */
-    /* Need all the following to word wrap instead of scroll box */
+    background-color: hsla(28,100%,95%,1);/* BEGIN word wrap *//* Need all the following to word wrap instead of scroll box */
     /* This will override the overflow:auto if present */
-    white-space: pre-wrap; /* css-3 */
-    white-space: -moz-pre-wrap !important; /* Mozilla, since 1999 */
-    white-space: -pre-wrap; /* Opera 4-6 */
-    white-space: -o-pre-wrap; /* Opera 7 */
-    word-wrap: break-word; /* Internet Explorer 5.5+ */
-    /* END word wrap */
+    white-space: pre-wrap;/* css-3 */
+    white-space: -moz-pre-wrap !important;/* Mozilla, since 1999 */
+    white-space: -pre-wrap;/* Opera 4-6 */
+    white-space: -o-pre-wrap;/* Opera 7 */
+    word-wrap: break-word;/* Internet Explorer 5.5+ *//* END word wrap */
     }
 
 pre /* Code blocks */
@@ -255,6 +253,7 @@ pre /* Code blocks */
 
 code /* All inline code spans */
     {
+    font-size: medium;
     }
 
 p > code, li > code /* Code spans in paragraphs and tight lists */
