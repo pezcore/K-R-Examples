@@ -207,6 +207,11 @@ div.figure /* Pandoc figure-style image */
     margin-right: auto;
     text-align: center;
     font-style: italic;
+    background-color: lightblue;
+    border-radius: 1.5em;
+    width: auto;
+    display: table;
+    padding: 1em;
     }
 
 p.caption /* Pandoc figure-style caption within div.figure */

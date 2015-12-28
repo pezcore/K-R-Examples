@@ -35,7 +35,8 @@ expansion process.
 
 To begin with, let us design and write a program to print each line of its
 input that contains a particular "pattern" or string of characters. (This is a
-special case of the UNIX program `grep`.) For example, searching for the pattern of letters "ould" in the set of lines
+special case of the UNIX program `grep`.) For example, searching for the
+pattern of letters "ould" in the set of lines
 
     Ah Love! could you and I with Fate conspire
     To grasp this sorry Scheme of Things entire,
@@ -303,7 +304,9 @@ sum += atof(line)
 
 If a name that has not been previously declared occurs in an expression and is
 followed by a left parentheses, it is declared by context to be a function
-name, the function is assumed to return an `int`, and nothing is assumed about its arguments. Furthermore, if a function declaration does not include arguments, as in
+name, the function is assumed to return an `int`, and nothing is assumed about
+its arguments. Furthermore, if a function declaration does not include
+arguments, as in
 
 ```c
 double atof();
@@ -424,7 +427,11 @@ on each operator and operand as it appears:
         else
             error
 
-The operation of pushing and popping a stack are trivial, but by the time error detection and recovery are added, they are long enough that it is better to put each in a separate function than to repeat the code throughout the whole program. And there should be a separate function for fetching the next input operator or operand.
+The operation of pushing and popping a stack are trivial, but by the time error
+detection and recovery are added, they are long enough that it is better to put
+each in a separate function than to repeat the code throughout the whole
+program. And there should be a separate function for fetching the next input
+operator or operand.
 
 The main design decision that has not yet been discussed is where the stack is,
 that is, which routines access it directly. On possibility is to keep it in
@@ -514,7 +521,8 @@ main()
 ```
 
 Because `+` and `*` are commutative operators, the order in which the popped
-operands are combined is irrelevant, but for `-` and `/` the left and right operand must be distinguished. In
+operands are combined is irrelevant, but for `-` and `/` the left and right
+operand must be distinguished. In
 
 ```c
 push(pop() - pop());   /* WRONG */
@@ -792,7 +800,66 @@ Accordingly, we will place this common material in a *header file*, `calc.h`,
 which will be included as necessary. (The `#include` line is described in
 Section 4.11.) The resulting program then looks like this:
 
-### INSERT PICTURE HERE
+**`calc.h`**:
+```c
+#define NUMBER '0'
+void push(double);
+double pop(void);
+int getop(char []);
+int getch(void);
+void ungetch(int);
+```
+
+**`main.c`**
+```c
+#include <stdio.h>
+#include <stdlib.h>
+#include "calc.h"
+#define MAXOP 100
+main(){
+    ...
+}
+```
+
+**`getop.c`**
+```c
+#include <stdio.h>
+#include <ctype.h>
+#include "calc.h"
+getop() {
+    ...
+}
+```
+
+**`stack.c`**
+```c
+#include <stdio.h>
+#include "calc.h"
+#define MAXVAL 100
+int sp = 0;
+double val[MAXVAL]
+void push(double){
+    ...
+}
+double pop(void){
+    ...
+}
+```
+
+**`getch.c`**
+```c
+#include <stdio.h>
+#define BUFSIZE 100
+char buf[BUFSIZE]
+int bufp = 0;
+int getch(void){
+    ...
+}
+void ungetch(int){
+    ...
+}
+```
+
 
 There is a tradeoff between the desire that each file have access only to the
 information it needs for its job and the practical reality that it is harder to
@@ -846,7 +913,10 @@ Hint: use an internal static variable.
 
 ## 4.7 Register Variables
 
-A `register` declaration advises the compiler that the variable in question will be heavily used. The idea is that register variables are to be placed in machine registers, which may result in smaller and faster programs. But compilers are free to ignore the advice.
+A `register` declaration advises the compiler that the variable in question
+will be heavily used. The idea is that register variables are to be placed in
+machine registers, which may result in smaller and faster programs. But
+compilers are free to ignore the advice.
 
 The register declaration looks like
 
@@ -855,7 +925,9 @@ register int  x;
 register char c;
 ```
 
-and so on. The `register` declaration can only be applied to automatic variables and to the formal parameters of a function. In this later case, it looks like
+and so on. The `register` declaration can only be applied to automatic
+variables and to the formal parameters of a function. In this later case, it
+looks like
 
 ```c
 f(register unsigned m, register long n)
@@ -1013,7 +1085,8 @@ way around.
 There are two solutions to this problem. On is to store the digits in an array
 as they are generated, then print them in the reverse order, as we did with
 `itoa` in section 3.6. The alternative is a recursive solution, in which
-`printd` first calls itself to cope with any leading digits, then prints the trailing digit. Again, this version can fail on the largest negative number.
+`printd` first calls itself to cope with any leading digits, then prints the
+trailing digit. Again, this version can fail on the largest negative number.
 
 ```c
 #include <stdio.h>
@@ -1087,7 +1160,11 @@ void swap(int v[], int i, int j)
 The standard library includes a version of `qsort` that can sort objects of any
 type.
 
-Recursion may provide no saving in storage, since somewhere a stack of the values being processed must be maintained. Nor will it be faster. But recursive code is more compact, and often much easier to write and understand than the non-recursive equivalent. Recursion is especially convenient for recursively defined data structures like trees, we will see a nice example in Section 6.6.
+Recursion may provide no saving in storage, since somewhere a stack of the
+values being processed must be maintained. Nor will it be faster. But recursive
+code is more compact, and often much easier to write and understand than the
+non-recursive equivalent. Recursion is especially convenient for recursively
+defined data structures like trees, we will see a nice example in Section 6.6.
 
 **Exercise 4-12**. Adapt the ideas of `printd` to write a recursive version of
 `itoa`; that is, convert an integer into a string by calling a recursive routine.
@@ -1106,7 +1183,8 @@ compilation and macros with arguments.
 
 ### 4.11.1 File Inclusion
 
-File inclusion makes it easy to handle collections of `#defines` and declarations (among other things). Any source line of the form
+File inclusion makes it easy to handle collections of `#defines` and
+declarations (among other things). Any source line of the form
 
 ```c
 #include "filename"
@@ -1171,7 +1249,9 @@ macro called max:
 #define  max(A, B)  ((A) > (B) ? (A) : (B))
 ```
 
-Although it looks like a function call, a use of max expands into in-line code. Each occurrence of a formal parameter (here A or B) will be replaced by the corresponding actual argument. Thus the line
+Although it looks like a function call, a use of max expands into in-line code.
+Each occurrence of a formal parameter (here A or B) will be replaced by the
+corresponding actual argument. Thus the line
 
 ```c
 x = max(p+q, r+s);
@@ -1283,7 +1363,8 @@ preprocessor statement `#elif` is like `else-if`.) The expression
 `defined(name)` in a `#if` is 1 if the `name` has been defined, and 0
 otherwise.
 
-For example, to make sure that the contents of a file `hdr.h` are included only once, the contents of the file are surrounded with a conditional like this:
+For example, to make sure that the contents of a file `hdr.h` are included only
+once, the contents of the file are surrounded with a conditional like this:
 
 ```c
 #if !defined(HDR)
@@ -1301,7 +1382,8 @@ consistently, then each header can itself include any other headers on which it
 depends, without the user of the header having to deal with the
 interdependence.
 
-This sequence tests the name `SYSTEM` to decide which version of a header to include:
+This sequence tests the name `SYSTEM` to decide which version of a header to
+include:
 
 ```c
 #if SYSTEM == SYSV

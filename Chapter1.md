@@ -78,7 +78,7 @@ named main. Normally you are at liberty to give functions whatever names you
 like, but `main` is special - your program begins executing at the beginning of
 main. This means that every program must have a main somewhere.
 
-main will usually call other functions to help perform its job, some that you
+`main` will usually call other functions to help perform its job, some that you
 wrote, and others from libraries that are provided for you. The first line of
 the program,
 
@@ -117,7 +117,7 @@ string of characters between the quotes.
 
 A sequence of characters in double quotes, like `"hello, world\n"`, is called a
 *character string* or *string constant*. For the moment our only use of
-character strings will be as arguments for printf and other functions.
+character strings will be as arguments for `printf` and other functions.
 
 The sequence `\n` in the string is C notation for the newline character, which
 when printed advances the output to the left margin on the next line. If you
@@ -154,7 +154,7 @@ itself. There is a complete list in Section 2.3.
 **Exercise 1-1**. Run the `hello, world` program on your system. Experiment
 with leaving out parts of the program, to see what error messages you get.
 
-**Exercise 1-2**. Experiment to find out what happens when prints's argument
+**Exercise 1-2**. Experiment to find out what happens when `printf`'s argument
 string contains `\c`, where c is some character not listed above.
 
 ## 1.2 Variables and Arithmetic Expressions
@@ -184,6 +184,7 @@ The program itself still consists of the definition of a single function named
 main. It is longer than the one that printed `hello, world`, but not
 complicated. It introduces several new ideas, including comments, declarations,
 variables, arithmetic expressions, loops , and formatted output.
+
 ```c
 #include <stdio.h>
 
@@ -229,15 +230,15 @@ int lower, upper, step;
 ```
 
 The type `int` means that the variables listed are integers; by contrast with
-float, which means floating point, i.e., numbers that may have a fractional
-part. The range of both int and float depends on the machine you are using;
-16-bits ints, which lie between -32768 and +32767, are common, as are 32-bit
-ints. A float number is typically a 32-bit quantity, with at least six
+`float`, which means floating point, i.e., numbers that may have a fractional
+part. The range of both `int` and `float` depends on the machine you are using;
+16-bits `int`s, which lie between -32768 and +32767, are common, as are 32-bit
+`int`s. A `float` number is typically a 32-bit quantity, with at least six
 significant digits and magnitude generally between about 10-38 and 1038.
 
 C provides several other data types besides int and float, including:
 
-name     | description
+Name     | Description
 ---------|-----------------------------
 `char`   |	character - a single byte
 `short`  |	short integer
@@ -303,11 +304,11 @@ any fractional part is discarded. Since 5 and 9 are integers. 5/9 would be
 truncated to zero and so all the Celsius temperatures would be reported as
 zero.
 
-This example also shows a bit more of how printf works. printf is a
+This example also shows a bit more of how `printf` works. `printf` is a
 general-purpose output formatting function, which we will describe in detail in
 Chapter 7. Its first argument is a string of characters to be printed, with
 each % indicating where one of the other (second, third, ...) arguments is to
-be substituted, and in what form it is to be printed. For instance, %d
+be substituted, and in what form it is to be printed. For instance, `%d`
 specifies an integer argument, so the statement
 
 `printf("%d\t%d\n", fahr, celsius);`
@@ -320,9 +321,9 @@ corresponding second argument, third argument, etc.; they must match up
 properly by number and type, or you will get wrong answers.
 
 By the way, `printf` is not part of the C language; there is no input or output
-defined in C itself. printf is just a useful function from the standard library
+defined in C itself. `printf` is just a useful function from the standard library
 of functions that are normally accessible to C programs. The behaviour of
-printf is defined in the ANSI standard, however, so its properties should be
+`printf` is defined in the ANSI standard, however, so its properties should be
 the same with any compiler and library that conforms to the standard.
 
 In order to concentrate on C itself, we don't talk much about input and output
@@ -428,7 +429,7 @@ String     | Description
  `%.2f`	   | print as floating point, 2 characters after decimal point
  `%6.2f`   | print as floating point, at least 6 wide and 2 after decimal point 
 
-Among others, printf also recognizes `%o` for octal, `%x` for hexadecimal, `%c`
+Among others, `printf` also recognizes `%o` for octal, `%x` for hexadecimal, `%c`
 for character, `%s` for character string and `%%` for itself.
 
 **Exercise 1-3**. Modify the temperature conversion program to print a heading
@@ -521,7 +522,7 @@ limited to numbers.
 
 /* print Fahrenheit-Celsius table */
 main()
-{
+
     int fahr;
 
     for (fahr = LOWER; fahr <= UPPER; fahr = fahr + STEP)
@@ -531,7 +532,7 @@ main()
 
 The quantities `LOWER`, `UPPER` and `STEP` are symbolic constants, not
 variables, so they do not appear in declarations. Symbolic constant names are
-conventionally written in upper case so they can ber readily distinguished from
+conventionally written in upper case so they can be readily distinguished from
 lower case variable names. Notice that there is no semicolon at the end of a
 `#define` line.
 
@@ -559,7 +560,7 @@ and returns that as its value. That is, after
 the variable `c` contains the next character of input. The characters normally
 come from the keyboard; input from files is discussed in Chapter 7.
 
-The function putchar prints a character each time it is called:
+The function `putchar` prints a character each time it is called:
 
     putchar(c);
 
@@ -603,11 +604,11 @@ specifically meant for storing such character data, but any integer type can be
 used. We used int for a subtle but important reason.
 
 The problem is distinguishing the end of input from valid data. The solution is
-that getchar returns a distinctive value when there is no more input, a value
+that `getchar` returns a distinctive value when there is no more input, a value
 that cannot be confused with any real character. This value is called `EOF`,
-for "end of file". We must declare c to be a type big enough to hold any value
-that getchar returns. We can't use char since `c` must be big enough to hold
-EOF in addition to any possible `char`. Therefore we use `int`.
+for "end of file". We must declare `c` to be a type big enough to hold any
+value that `getchar` returns. We can't use char since `c` must be big enough to
+hold `EOF` in addition to any possible `char`. Therefore we use `int`.  
 
 `EOF` is an integer defined in `<stdio.h>`, but the specific numeric value
 doesn't matter as long as it is not the same as any char value. By using the
@@ -621,8 +622,8 @@ programmers. In C, any assignment, such as
 
 is an expression and has a value, which is the value of the left hand side
 after the assignment. This means that a assignment can appear as part of a
-larger expression. If the assignment of a character to c is put inside the test
-part of a while loop, the copy program can be written this way:
+larger expression. If the assignment of a character to `c` is put inside the
+test part of a while loop, the copy program can be written this way:
 
 ```c
 #include <stdio.h>
@@ -637,16 +638,16 @@ main()
 }
 ```
 
-The while gets a character, assigns it to c, and then tests whether the
+The while gets a character, assigns it to `c`, and then tests whether the
 character was the end-of-file signal. If it was not, the body of the while is
 executed, printing the character. The while then repeats. When the end of the
 input is finally reached, the while terminates and so does main.
 
-This version centralizes the input - there is now only one reference to getchar
-and shrinks the program. The resulting program is more compact, and, once the
-idiom is mastered, easier to read. You'll see this style often. (It's possible
-to get carried away and create impenetrable code, however, a tendency that we
-will try to curb.)
+This version centralizes the input - there is now only one reference to
+`getchar` and shrinks the program. The resulting program is more compact, and,
+once the idiom is mastered, easier to read. You'll see this style often. (It's
+possible to get carried away and create impenetrable code, however, a tendency
+that we will try to curb.)
 
 The parentheses around the assignment, within the condition are necessary. The
 precedence of != is higher than that of =, which means that in the absence of
@@ -660,11 +661,11 @@ is equivalent to
     c = (getchar() != EOF)
    
 This has the undesired effect of setting `c` to 0 or 1, depending on whether or
-not the call of getchar returned end of file. (More on this in Chapter 2.)
+not the call of `getchar` returned end of file. (More on this in Chapter 2.)
 
 **Exercsise 1-6**. Verify that the expression `getchar() != EOF` is 0 or 1.
 
-**Exercise 1-7**. Write a program to print the value of EOF.
+**Exercise 1-7**. Write a program to print the value of `EOF`.
 
 ### 1.5.2 Character Counting
 
@@ -698,18 +699,18 @@ The character counting program accumulates its count in a `long` variable
 instead of an `int`. `long` integers are at least 32 bits. Although on some
 machines, `int` and `long` are the same size, on others an `int` is 16 bits,
 with a maximum value of 32767, and it would take relatively little input to
-overflowan int counter. The conversion specification `%ld` tells `printf` that
-the corresponding argument is a `long` integer.  It may be possible to cope
-with even bigger numbers by using a double (double precision `float`). We will
-also use a `for` statement instead of a `while`, to illustrate another way to
-write the loop.
+overflow an `int` counter. The conversion specification `%ld` tells `printf`
+that the corresponding argument is a `long` integer.  It may be possible to
+cope with even bigger numbers by using a double (double precision `float`). We
+will also use a `for` statement instead of a `while`, to illustrate another way
+to write the loop.
 
 ```c
 #include <stdio.h>
 
 /* count characters in input; 2nd version */
 main()
-{
+
     double nc;
 
     for (nc = 0; gechar() != EOF; ++nc)
@@ -870,8 +871,8 @@ condition part of an if statement is false. The general form is
         statement2
 
 One and only one of the two statements associated with an `if-else` is
-performed. If the *expression* is true, *statement1* is executed; if not,
-*statement2* is executed. Each *statement* can be a single statement or several
+performed. If the *expression* is true, `statement1` is executed; if not,
+`statement2` is executed. Each *statement* can be a single statement or several
 in braces. In the word count program, the one after the `else` is an `if` that
 controls two statements in braces.
 
@@ -952,7 +953,7 @@ By definition, `chars` are just small integers, so `char` variables and
 constants are identical to `ints` in arithmetic expressions. This is natural
 and convenient; for example `c-'0'` is an integer expression with a value
 between 0 and 9 corresponding to the character `'0'` to `'9'` stored in `c`,
-and thus a valid subscript for the array ndigit.
+and thus a valid subscript for the array `ndigit`.
 
 The decision as to whether a character is a digit, white space, or something
 else is made with the sequence
@@ -996,7 +997,7 @@ shown; if each `if` were indented past the previous `else`, a long sequence of
 decisions would march off the right side of the page.
 
 The `switch` statement, to be discussed in Chapter 4, provides another way to
-write a multi-way branch that is particulary suitable when the condition is
+write a multi-way branch that is particularly suitable when the condition is
 whether some integer or character expression matches one of a set of constants.
 For contrast, we will present a `switch` version of this program in Section 3.4.
 
@@ -1013,8 +1014,8 @@ In C, a function is equivalent to a subroutine or function in Fortran, or a
 procedure or function in Pascal. A function provides a convenient way to
 encapsulate some computation, which can then be used without worrying about its
 implementation. With properly designed functions, it is possible to ignore
-*how* a job is done; knowing *what* is done is sufficient. C makes the sue of
-functions easy, convinient and efficient; you will often see a short function
+*how* a job is done; knowing *what* is done is sufficient. C makes the use of
+functions easy, convenient, and efficient; you will often see a short function
 defined and called only once, just because it clarifies some piece of code.
 
 So far we have used only functions like `printf`, `getchar` and `putchar` that
@@ -1182,7 +1183,7 @@ use a function for conversion.
 ## 1.8 Arguments - Call by Value
 
 One aspect of C functions may be unfamiliar to programmers who are used to some
-other languages, particulary Fortran. In C, all function arguments are passed
+other languages, particularly Fortran. In C, all function arguments are passed
 "by value." This means that the called function is given the values of its
 arguments in temporary variables rather than the originals. This leads to some
 different properties than are seen with "call by reference" languages like
@@ -1223,7 +1224,7 @@ beginning of the array - there is no copying of array elements. By subscripting
 this value, the function can access and alter any argument of the array. This
 is the topic of the next section.
 
-#### 1.9 Character Arrays
+## 1.9 Character Arrays
 
 The most common type of array in C is the array of characters. To illustrate
 the use of character arrays and functions to manipulate them, let's write a
@@ -1321,7 +1322,7 @@ which specifies that the first argument, `s,` is an array, and the second,
 declaration is to set aside storage. The length of an array `s` is not
 necessary in `getline` since its size is set in `main`. `getline` uses `return`
 to send a value back to the caller, just as the function `power` did. This line
-also declares that getline returns an `int`; since `int` is the default return
+also declares that `getline` returns an `int`; since `int` is the default return
 type, it could be omitted.
 
 Some functions return a useful value; others, like `copy`, are used only for
@@ -1357,8 +1358,8 @@ line might be, so `getline` checks for overflow. On the other hand, the user of
 chosen not to add error checking to it.
 
 **Exercise 1-16**. Revise the main routine of the longest-line program so it
-will correctly print the length of arbitrary long input lines, and as much as
-possible of the text.
+will correctly print the length of arbitrarily long input lines, and as much
+as possible of the text.
 
 **Exercise 1-17**. Write a program to print all input lines that are longer
 than 80 characters.
@@ -1366,7 +1367,7 @@ than 80 characters.
 **Exercise 1-18**. Write a program to remove trailing blanks and tabs from each
 line of input, and to delete entirely blank lines.
 
-**Exercise 1-19**. Write a function `reverse`(s) that reverses the character
+**Exercise 1-19**. Write a function `reverse(s)` that reverses the character
 string `s`. Use it to write a program that reverses its input a line at a time.
 
 ## 1.10 External Variables and Scope
@@ -1526,11 +1527,11 @@ parameter?
 
 **Exercise 1-21**. Write a program `entab` that replaces strings of blanks by
 the minimum number of tabs and blanks to achieve the same spacing. Use the same
-tab stops as for detab. When either a tab or a single blank would suffice to
+tab stops as for `detab`. When either a tab or a single blank would suffice to
 reach a tab stop, which should be given preference?
 
 **Exercise 1-22**. Write a program to "fold" long input lines into two or more
-shorter lines after the last non-blank character that occurs before the n-th
+shorter lines after the last non-blank character that occurs before the `n`-th
 column of input. Make sure your program does something intelligent with very
 long lines, and if there are no blanks or tabs before the specified column.
 
