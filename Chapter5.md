@@ -53,7 +53,10 @@ declaration of the pointer `ip`,
 int *ip;
 ```
 
-is intended as a mnemonic; it says that the expression `*ip` is an `int`. The syntax of the declaration for a variable mimics the syntax of expressions in which the variable might appear. This reasoning applies to function declarations as well. For example,
+is intended as a mnemonic; it says that the expression `*ip` is an `int`. The
+syntax of the declaration for a variable mimics the syntax of expressions in
+which the variable might appear. This reasoning applies to function
+declarations as well. For example,
 
 ```c
 double *dp, atof(char *);
@@ -1161,4 +1164,485 @@ for an array of pointers:
 char *name[] = { "Illegal month", "Jan", "Feb", "Mar" };
 ```
 
+![Array of Pointers](arrayofpointers.svg)
 
+with those for a two-dimensional array:
+
+![2 Dimensional Array](aname.svg)
+
+**Exercise 5-9**. Rewrite the routines `day_of_year` and `month_day` with
+pointers instead of indexing. 
+
+
+## 5.10 Command-line Arguments
+
+In environments that support C, there is a way to pass command-line arguments
+or parameters to a program when it begins executing. When `main` is called, it
+is called with two arguments. The first (conventionally called `argc`, for
+argument count) is the number of command-line arguments the program was invoked
+with; the second (`argv`, for argument vector) is a pointer to an array of
+character strings that contain the arguments, one per string. We customarily
+use multiple levels of pointers to manipulate these character strings.
+
+The simplest illustration is the program `echo`, which echoes its command-line
+arguments on a single line, separated by blanks. That is, the command
+
+    echo hello, world
+
+prints the output
+
+    hello, world
+
+By convention, `argv[0]` is the name by which the program was invoked, so
+`argc` is at least 1. If `argc` is 1, there are no command-line arguments after
+the program name. In the example above, `argc` is 3, and `argv[0]`, `argv[1]`,
+and `argv[2]` are "`echo`", "`hello, `", and "`world`" respectively. The first
+optional argument is `argv[1]` and the last is `argv[argc-1]`; additionally,
+the standard requires that `argv[argc]` be a null pointer. 
+
+![Command Line args](argv.svg)
+
+The first version of `echo` treats `argv` as an array of character pointers:
+
+```c
+#include <stdio.h>
+
+/* echo command-line arguments; 1st version */
+main(int argc, char *argv[])
+{
+    int i;
+
+    for (i = 1; i < argc; i++)
+        printf("%s%s", argv[i], (i < argc-1) ? " " : "");
+    printf("\n");
+    return 0;
+}
+```
+
+Since `argv` is a pointer to an array of pointers, we can manipulate the
+pointer rather than index the array. This next variant is based on incrementing
+`argv`, which is a pointer to pointer to `char`, while `argc` is counted down:
+
+```c
+#include <stdio.h>
+
+/* echo command-line arguments; 2nd version */
+main(int argc, char *argv[])
+{
+    while (--argc > 0)
+        printf("%s%s", *++argv, (argc > 1) ? " " : "");
+    printf("\n");
+    return 0;
+}
+```
+
+Since `argv` is a pointer to the beginning of the array of argument strings,
+incrementing it by 1 `(++argv)` makes it point at the original `argv[1]`
+instead of `argv[0]`. Each successive increment moves it along to the next
+argument; `*argv` is then the pointer to that argument. At the same time,
+`argc` is decremented; when it becomes zero, there are no arguments left to
+print.
+
+Alternatively, we could write the `printf` statement as
+
+```c
+printf((argc > 1) ? "%s " : "%s", *++argv);
+```
+
+This shows that the format argument of `printf` can be an expression too.
+
+As a second example, let us make some enhancements to the pattern-finding
+program from Section 4.1. If you recall, we wired the search pattern deep into
+the program, an obviously unsatisfactory arrangement. Following the lead of the
+UNIX program `grep`, let us enhance the program so the pattern to be matched is
+specified by the first argument on the command line.
+
+```c
+#include <stdio.h>
+#include <string.h>
+#define MAXLINE 1000
+
+int getline(char *line, int max);
+
+/* find:  print lines that match pattern from 1st arg */
+main(int argc, char *argv[])
+{
+    char line[MAXLINE];
+    int found = 0;
+
+    if (argc != 2)
+        printf("Usage: find pattern\n");
+    else
+        while (getline(line, MAXLINE) > 0)
+            if (strstr(line, argv[1]) != NULL) {
+                printf("%s", line);
+                found++;
+            }
+    return found;
+}
+```
+
+The standard library function `strstr(s,t)` returns a pointer to the first
+occurrence of the string `t` in the string `s`, or `NULL` if there is none. It
+is declared in `<string.h>`.
+
+The model can now be elaborated to illustrate further pointer constructions.
+Suppose we want to allow two optional arguments. One says "print all the lines
+except those that match the pattern;" the second says "precede each printed
+line by its line number."
+
+A common convention for C programs on UNIX systems is that an argument that
+begins with a minus sign introduces an optional flag or parameter. If we choose
+`-x` (for "except") to signal the inversion, and `-n` ("number") to request
+line numbering, then the command
+
+    find -x -npattern
+
+will print each line that doesn't match the pattern, preceded by its line
+number.
+
+Optional arguments should be permitted in any order, and the rest of the
+program should be independent of the number of arguments that we present.
+Furthermore, it is convenient for users if option arguments can be combined, as
+in
+
+    find -nx pattern
+
+Here is the program:
+
+```c
+#include <stdio.h>
+#include <string.h>
+#define MAXLINE 1000
+
+int getline(char *line, int max);
+
+/* find: print lines that match pattern from 1st arg */
+main(int argc, char *argv[])
+{
+    char line[MAXLINE];
+    long lineno = 0;
+    int c, except = 0, number = 0, found = 0;
+
+    while (--argc > 0 && (*++argv)[0] == '-')
+        while (c = *++argv[0])
+            switch (c) {
+            case 'x':
+                except = 1;
+                break;
+            case 'n':
+                number = 1;
+                break;
+            default:
+                printf("find: illegal option %c\n", c);
+                argc = 0;
+                found = -1;
+                break;
+            }
+    if (argc != 1)
+        printf("Usage: find -x -n pattern\n");
+    else
+        while (getline(line, MAXLINE) > 0) {
+            lineno++;
+            if ((strstr(line, *argv) != NULL) != except) {
+                if (number)
+                    printf("%ld:", lineno);
+                printf("%s", line);
+                found++;
+            }
+        }
+    return found;
+}
+```
+
+`argc` is decremented and `argv` is incremented before each optional argument.
+At the end of the loop, if there are no errors, `argc` tells how many arguments
+remain unprocessed and `argv` points to the first of these. Thus `argc` should
+be 1 and `*argv` should point at the pattern. Notice that `*++argv` is a
+pointer to an argument string, so `(*++argv)[0]` is its first character. (An
+alternate valid form would be `**++argv`.) Because `[]` binds tighter than `*`
+and `++`, the parentheses are necessary; without them the expression would be
+taken as `*++(argv[0])`. In fact, that is what we have used in the inner loop,
+where the task is to walk along a specific argument string. In the inner loop,
+the expression `*++argv[0]` increments the pointer `argv[0]`!
+
+It is rare that one uses pointer expressions more complicated than these; in
+such cases, breaking them into two or three steps will be more intuitive.
+
+**Exercise 5-10**. Write the program `expr`, which evaluates a reverse Polish expression from the command line, where each operator or operand is a separate argument. For example,
+
+    expr 2 3 4 + *
+
+evaluates `2 * (3+4)`.
+
+**Exercise 5-11**. Modify the program `entab` and `detab` (written as exercises
+in Chapter 1) to accept a list of tab stops as arguments. Use the default tab
+settings if there are no arguments.
+
+**Exercise 5-12**. Extend `entab` and `detab` to accept the shorthand
+
+    entab -m +n
+
+to mean tab stops every `n` columns, starting at column `m`. Choose convenient
+(for the user) default behavior.
+
+**Exercise 5-13**. Write the program `tail`, which prints the last `n` lines of
+its input. By default, `n` is set to 10, let us say, but it can be changed by
+an optional argument so that
+
+    tail -n
+
+prints the last `n` lines. The program should behave rationally no matter how
+unreasonable the input or the value of `n`. Write the program so it makes the
+best use of available storage; lines should be stored as in the sorting program
+of Section 5.6, not in a two-dimensional array of fixed size. 
+
+## 5.11 Pointers to Functions
+
+In C, a function itself is not a variable, but it is possible to define
+pointers to functions, which can be assigned, placed in arrays, passed to
+functions, returned by functions, and so on. We will illustrate this by
+modifying the sorting procedure written earlier in this chapter so that if the
+optional argument `-n` is given, it will sort the input lines numerically
+instead of lexicographically.
+
+A sort often consists of three parts - a comparison that determines the
+ordering of any pair of objects, an exchange that reverses their order, and a
+sorting algorithm that makes comparisons and exchanges until the objects are in
+order. The sorting algorithm is independent of the comparison and exchange
+operations, so by passing different comparison and exchange functions to it, we
+can arrange to sort by different criteria. This is the approach taken in our
+new sort.
+
+Lexicographic comparison of two lines is done by `strcmp`, as before; we will
+also need a routine `numcmp` that compares two lines on the basis of numeric
+value and returns the same kind of condition indication as `strcmp` does. These
+functions are declared ahead of `main` and a pointer to the appropriate one is
+passed to `qsort`. We have skimped on error processing for arguments, so as to
+concentrate on the main issues.
+
+```c
+#include <stdio.h>
+#include <string.h>
+
+#define MAXLINES 5000     /* max #lines to be sorted */
+char *lineptr[MAXLINES];  /* pointers to text lines */
+
+int readlines(char *lineptr[], int nlines);
+void writelines(char *lineptr[], int nlines);
+
+void qsort(void *lineptr[], int left, int right,
+            int (*comp)(void *, void *));
+int numcmp(char *, char *);
+
+/* sort input lines */
+main(int argc, char *argv[])
+{
+    int nlines;        /* number of input lines read */
+    int numeric = 0;   /* 1 if numeric sort */
+
+    if (argc > 1 && strcmp(argv[1], "-n") == 0)
+        numeric = 1;
+    if ((nlines = readlines(lineptr, MAXLINES)) >= 0) {
+        qsort((void**) lineptr, 0, nlines-1,
+            (int (*)(void*,void*))(numeric ? numcmp : strcmp));
+        writelines(lineptr, nlines);
+        return 0;
+    } else {
+        printf("input too big to sort\n");
+        return 1;
+    }
+}
+```
+
+In the call to `qsort`, `strcmp` and `numcmp` are addresses of functions. Since
+they are known to be functions, the `&` is not necessary, in the same way that
+it is not needed before an array name.
+
+We have written `qsort` so it can process any data type, not just character
+strings. As indicated by the function prototype, `qsort` expects an array of
+pointers, two integers, and a function with two pointer arguments. The generic
+pointer type `void *` is used for the pointer arguments. Any pointer can be
+cast to `void *` and back again without loss of information, so we can call
+`qsort` by casting arguments to `void *`. The elaborate cast of the function
+argument casts the arguments of the comparison function. These will generally
+have no effect on actual representation, but assure the compiler that all is
+well.
+
+```c
+/* qsort:  sort v[left]...v[right] into increasing order */
+void qsort(void *v[], int left, int right,
+            int (*comp)(void *, void *))
+{
+    int i, last;
+
+    void swap(void *v[], int, int);
+
+    if (left >= right)    /* do  nothing if array contains */
+        return;           /* fewer than two elements */
+    swap(v, left, (left + right)/2);
+    last = left;
+    for (i = left+1; i <= right;  i++)
+        if ((*comp)(v[i], v[left]) < 0)
+            swap(v, ++last, i);
+    swap(v, left, last);
+    qsort(v, left, last-1, comp);
+    qsort(v, last+1, right, comp);
+}
+```
+
+The declarations should be studied with some care. The fourth parameter of
+`qsort` is
+
+```c
+int (*comp)(void *, void *)
+```
+
+which says that `comp` is a pointer to a function that has two `void *`
+arguments and returns an `int`.
+
+The use of `comp` in the line
+
+```c
+if ((*comp)(v[i], v[left]) < 0)
+```
+
+is consistent with the declaration: `comp` is a pointer to a function, `*comp`
+is the function, and
+
+```c
+(*comp)(v[i], v[left])
+```
+
+is the call to it. The parentheses are needed so the components are correctly associated; without them,
+
+```c
+int *comp(void *, void *)    /* WRONG */
+```
+
+says that `comp` is a function returning a pointer to an `int`, which is very
+different.
+
+We have already shown `strcmp`, which compares two strings. Here is `numcmp`,
+which compares two strings on a leading numeric value, computed by calling
+`atof`:
+
+```c
+#include <stdlib.h>
+
+/* numcmp:  compare s1 and s2 numerically */
+int numcmp(char *s1, char *s2)
+{
+    double v1, v2;
+
+    v1 = atof(s1);
+    v2 = atof(s2);
+    if (v1 < v2)
+        return -1;
+    else if (v1 > v2)
+        return 1;
+    else
+        return 0;
+}
+```
+
+The `swap` function, which exchanges two pointers, is identical to what we
+presented earlier in the chapter, except that the declarations are changed to
+`void *`.
+
+```c
+void swap(void *v[],  int i, int j;)
+{
+    void *temp;
+
+    temp = v[i];
+    v[i] = v[j];
+    v[j] = temp;
+}
+```
+
+A variety of other options can be added to the sorting program; some make challenging exercises.
+
+**Exercise 5-14**. Modify the `sort` program to handle a `-r` flag, which
+indicates sorting in reverse (decreasing) order. Be sure that `-r` works with
+`-n`.
+
+**Exercise 5-15**. Add the option `-f` to fold upper and lower case together,
+so that case distinctions are not made during sorting; for example, `a` and `A`
+compare equal.
+
+**Exercise 5-16**. Add the `-d` (:directory order") option, which makes
+comparisons only on letters, numbers and blanks. Make sure it works in
+conjunction with `-f`.
+
+**Exercise 5-17**. Add a field-searching capability, so sorting may be done on
+fields within lines, each field sorted according to an independent set of
+options. (The index for this book was sorted with `-df` for the index category
+and `-n` for the page numbers.)
+
+
+## 5.12 Complicated Declarations
+
+C is sometimes castigated for the syntax of its declarations, particularly ones
+that involve pointers to functions. The syntax is an attempt to make the
+declaration and the use agree; it works well for simple cases, but it can be
+confusing for the harder ones, because declarations cannot be read left to
+right, and because parentheses are over-used. The difference between
+
+```c
+int *f();       /* f: function returning pointer to int */
+```
+
+and
+
+```c
+int (*pf)();    /* pf: pointer to function returning int */ 
+```
+
+illustrates the problem: `*` is a prefix operator and it has lower precedence
+than `()`, so parentheses are necessary to force the proper association.
+
+Although truly complicated declarations rarely arise in practice, it is
+important to know how to understand them, and, if necessary, how to create
+them. One good way to synthesize declarations is in small steps with `typedef`,
+which is discussed in Section 6.7. As an alternative, in this section we will
+present a pair of programs that convert from valid C to a word description and
+back again. The word description reads left to right.
+
+The first, `dcl`, is the more complex. It converts a C declaration into a word
+description, as in these examples:
+
+Declaration | Type
+------------|------
+`char **argv` | argv:  pointer to char
+`int (*daytab)[13]` | daytab:  pointer to array[13] of int
+`int *daytab[13]` | daytab:  array[13] of pointer to int
+`void *comp()` | comp: function returning pointer to void
+`void (*comp)()` | comp: pointer to function returning void
+`char (*(*x())[])()` |  x: function returning pointer to array[] of pointer to function returning char
+`char (*(*x[3])())[5]` | x: array[3] of pointer to function returning pointer to array[5] of char
+
+`dcl` is based on the grammar that specifies a declarator, which is spelled out precisely in Appendix A, Section 8.5; this is a simplified form:
+
+```
+dcl:       optional *'s direct-dcl
+direct-dcl name
+                 (dcl)
+                 direct-dcl()
+                 direct-dcl[optional size]
+```
+
+In words, a *dcl* is a *direct-dcl*, perhaps preceded by `*`'s. A *direct-dcl*
+is a name, or a parenthesized *dcl*, or a *direct-dcl* followed by parentheses,
+or a *direct-dcl* followed by brackets with an optional size.
+
+This grammar can be used to parse functions. For instance, consider this declarator:
+
+```c
+(*pfa[])()
+```
+
+`pfa` will be identified as a name and thus as a *direct-dcl*. Then `pfa[]` is
+also a *direct-dcl*. Then `*pfa[]` is recognized as a *dcl*, so `(*pfa[])` is a
+*direct-dcl*. Then `(*pfa[])()` is a *direct-dcl* and thus a *dcl*. We can also
+illustrate the parse with a tree like this (where *direct-dcl* has been abbreviated to dir-dcl):
