@@ -1,0 +1,37 @@
+body {
+    font-family: source sans pro;
+    color: #444;
+    font-size: 15px;
+}
+
+div.sourceCode {
+    background-color: aliceblue;
+    border: 1px solid;
+    border-radius: 8px;
+    padding: 0 10px;
+}
+
+code {
+    background-color: #F3F3F3;
+    border: 1px solid;
+    border-color: lightgray;
+    font-family: Droid Sans Mono;
+}
+
+code.sourceCode {background-color: aliceblue;border: 0;}
+
+::selection {
+    background: #4c4100;
+    background: #000;
+    color: #d9ff00;
+    text-shadow: none;
+}
+
+td {
+    vertical-align: top;
+}
+
+blockquote {
+    border-left: 5px solid lightcoral;
+    padding: 0 10px;
+}
