@@ -5,7 +5,7 @@ performed. We have already met the most common control-flow constructions in
 earlier examples; here we will complete the set, and be more precise about the
 ones discussed before.
 
-## 3.1 Statements and Blocks
+## 3.1 Statements and Blocks [¶](#statements-and-blocks)
 An expression such as `x = 0` or `i++` or `printf(...)` becomes a statement
 when it is followed by a semicolon, as in
 
@@ -14,6 +14,9 @@ x = 0;
 i++;
 printf(...);
 ```
+<div class=warning>
+This is a custom container
+</div>
 
 In C, the semicolon is a statement terminator, rather than a separator as it is
 in languages like Pascal.
