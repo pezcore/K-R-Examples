@@ -4,32 +4,25 @@
  * parameter? */
 #include<stdio.h>
 #define n 4
+#define ANSI_COLOR_GREEN   "\x1b[32m"
 
 main(){
     int c,i = 0;
 
     while ((c=getchar())!=EOF){
         if (c == '\t'){
-			/* every tab must be replaced by at least one space */
-			putchar(0x20); i++; 
-			/* additional spaces put until tab stop is reached */
-            while(!i || i%n){
-                putchar(0x20); i++;
-            }
-		}
+            /* every tab must be replaced by at least one space */
+            putchar(0x20);
+            /* additional spaces put until tab stop is reached */
+            while(++i%n) putchar(0x20);
+        }
         else{
-			/* normal char piping */
-			putchar(c);
-			i++;
-		}
+            /* normal char piping */
+            putchar(c);
+            i++;
+        }
         if (c == '\n') i=0;
     }
 }
 
 			/* This line starts with 3 tabs */
-			/* This line has mixed indentations but should be at the same col
-			 * */
-			
-
-
-				
