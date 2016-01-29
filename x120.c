@@ -9,14 +9,27 @@ main(){
     int c,i = 0;
 
     while ((c=getchar())!=EOF){
-        if (c == '\t')
-            while((!i) || (i%n)){
+        if (c == '\t'){
+			/* every tab must be replaced by at least one space */
+			putchar(0x20); i++; 
+			/* additional spaces put until tab stop is reached */
+            while(!i || i%n){
                 putchar(0x20); i++;
             }
-        else putchar(c);
-		i++;
+		}
+        else{
+			/* normal char piping */
+			putchar(c);
+			i++;
+		}
         if (c == '\n') i=0;
     }
 }
 
 			/* This line starts with 3 tabs */
+			/* This line has mixed indentations but should be at the same col
+			 * */
+			
+
+
+				
