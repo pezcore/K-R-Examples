@@ -15,16 +15,14 @@ code {
     background-color: #F3F3F3;
     border: 1px solid;
     border-color: lightgray;
+	border-radius: 3px;
     font-family: Droid Sans Mono;
 }
 
 code.sourceCode {background-color: aliceblue;border: 0;}
 
-::selection {
-    background: #4c4100;
-    background: #000;
-    color: #d9ff00;
-    text-shadow: none;
+::-moz-selection {
+    background: #6cffaa;
 }
 
 td {
