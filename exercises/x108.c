@@ -4,17 +4,19 @@
 
 #include <stdio.h>
 
-main(){
+main()
+{
     char c;
     int nblank, ntab, nline;
     nblank = ntab = nline = 0;
     
-    while ((c = getchar()) != EOF){
+    while ((c = getchar()) != EOF)
+    {
         if (c == '\n')
             nline++;
         if (c == '\t')
             ntab++;
-        if (c == 0x20)
+        if (c == ' ')
             nblank++;
     }
     printf("Blanks:\t%d\nTabs:\t%d\nLines:\t%d\n", nblank, ntab, nline);
