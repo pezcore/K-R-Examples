@@ -6,25 +6,34 @@
 
 #include <stdio.h>
 
-int wordlengths[0xff];
 
-main(){
+main()
+{
+    int wordlengths[0xff], i; /* array to store word lengths */
+    /* initialize the wordlengths array to all zero */
+    for (i = 0; i < 0xff; ++i)
+        wordlengths[i] = 0;
+
     char c, size = 0, state = 0; 
 
-    while ((c = getchar()) != EOF) {
-        if (!(c == '\t' || c == 0x20 || c == '\n')) {
+    while ((c = getchar()) != EOF)
+    {
+        if (!(c == '\t' || c == 0x20 || c == '\n'))
+        {
             size++;
             if (!state) state = 1;
         }
-        else if (state){
-            wordlengths[size]++;
+        else if (state)
+        {
+            wordlengths[size - 1]++;
             size = 0;
         }
     }
 
-    for (int i = 1; i < 256; i++){
-        printf("%d:\t", i);
-        for (int j = 0; j < wordlengths[i]; j++)
+    for (int i = 1; i <= 0xff; i++)
+    {
+        printf("%3d: ", i);
+        for (int j = 0; j < wordlengths[i - 1]; j++)
             putchar('*');
         putchar('\n');
     }

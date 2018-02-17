@@ -16,7 +16,7 @@ main()
 
     for (int i = 0; i < 0xff; i++)
     {
-        printf("[0x%2x]:\t", i);
+        printf("[0x%02x]: ", i);
         for (int j = 0; j < count[i]; ++j)
             putchar('*');
         putchar('\n');
