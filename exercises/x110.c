@@ -6,11 +6,14 @@
 
 #include <stdio.h>
 
-main(){
+main()
+{
     char c;
     
-    while((c = getchar()) != EOF) {
-        switch (c) {
+    while ((c = getchar()) != EOF)
+    {
+        switch (c)
+        {
             case '\t' :
                 putchar('\\');
                 putchar('t');
@@ -23,7 +26,6 @@ main(){
                 putchar('\\');
                 putchar('\\');
                 break;
-            
             default :
                 putchar(c);
         }
