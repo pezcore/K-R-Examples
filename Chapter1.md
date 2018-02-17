@@ -1339,6 +1339,12 @@ constant like
 appears in a C program, it is stored as an array of characters containing the
 characters in the string and terminated with a `'\0'` to mark the end.
 
+```
+┌───┬───┬───┬───┬───┬────┬────┐
+│ h │ e │ l │ l │ o │ \n │ \0 │
+└───┴───┴───┴───┴───┴────┴────┘
+```
+
 The `%s` format specification in `printf` expects the corresponding argument to
 be a string represented in this form. `copy` also relies on the fact that its
 input argument is terminated with a `'\0'`, and copies this character into the
