@@ -45,7 +45,8 @@ int getline(char s[],int lim)
 
     for (i=0; i < lim-1 && (c=getchar())!=EOF && c!='\n'; ++i)
         s[i] = c;
-    if (c == '\n') {
+    if (c == '\n')
+    {
         s[i] = c;
         ++i;
     }
@@ -56,9 +57,7 @@ int getline(char s[],int lim)
 /* copy:  copy 'from' into 'to'; assume to is big enough */
 void copy(char to[], char from[])
 {
-    int i;
-
-    i = 0;
+    int i = 0;
     while ((to[i] = from[i]) != '\0')
         ++i;
 }

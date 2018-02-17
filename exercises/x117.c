@@ -8,7 +8,8 @@
 int getline(char s[], int lim);
 char line[MAXLINE];
 
-main(){
+main()
+{
     int i, len, max;
     
     while((len = getline(line, MAXLINE)) > 0)
@@ -17,7 +18,8 @@ main(){
 }
 
 /* getline:  read a line into s, return length  */
-int getline(char s[],int lim) {
+int getline(char s[],int lim)
+{
     int c, i;
 
     for (i=0; i < lim-1 && (c=getchar())!=EOF && c!='\n'; ++i)
