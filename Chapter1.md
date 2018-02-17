@@ -1345,6 +1345,13 @@ characters in the string and terminated with a `'\0'` to mark the end.
 └───┴───┴───┴───┴───┴────┴────┘
 ```
 
+---
+**NOTE**
+
+test note
+
+---
+
 The `%s` format specification in `printf` expects the corresponding argument to
 be a string represented in this form. `copy` also relies on the fact that its
 input argument is terminated with a `'\0'`, and copies this character into the
