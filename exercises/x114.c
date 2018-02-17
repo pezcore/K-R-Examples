@@ -7,13 +7,15 @@
 
 int count[0xff];
 
-main(){
+main()
+{
     char c;
 
     while((c = getchar()) != EOF)
         count[c]++;
 
-    for (int i = 0; i < 0xff; i++){
+    for (int i = 0; i < 0xff; i++)
+    {
         printf("[0x%2x]:\t", i);
         for (int j = 0; j < count[i]; ++j)
             putchar('*');

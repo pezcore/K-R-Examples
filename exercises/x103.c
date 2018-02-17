@@ -6,7 +6,8 @@
 #include <stdio.h>
 
 /* print Fahrenheit-Celsius table for fahr = 0, 20, ..., 300 */
-main() {
+main()
+{
     float fahr, celsius;
     int lower, upper, step;
 
@@ -16,7 +17,8 @@ main() {
 
     fahr = lower;
     printf("Fahrenheit Celsius\n==================\n");
-    while (fahr <= upper) {
+    while (fahr <= upper)
+    {
         celsius = (5.0/9.0) * (fahr-32);
         printf("%10.0f %7.1f\n", fahr, celsius);
         fahr += step;
